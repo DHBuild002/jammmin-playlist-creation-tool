@@ -1,0 +1,26 @@
+/* src/components/TrackList.css */
+.track-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: rgb(207, 207, 207);
+  }
+  
+  .track {
+    border: 1px solid #939393;
+    padding: 1rem;
+    width: 50%;
+    text-align: center;
+    border-radius: 8px;
+  }
+  
+  .track h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .track p {
+    margin: 0.2rem 0;
+  }
+  
