@@ -17,7 +17,7 @@ const Track = ({ track, onAdd }) => {
           </div>
           <div className="buttonArea">
             <button className="add-track-btn" onClick={handleAdd}>
-              Add
+              +
             </button>
           </div>
         </div>

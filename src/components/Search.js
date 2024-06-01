@@ -12,7 +12,7 @@ const Search = ({ onSearch }) => {
 
   return (
     <>
-      <div>
+      <div className="search">
         <h4>Search tracks on Spotify</h4>
         <input
           className="input searchBox"
@@ -20,16 +20,16 @@ const Search = ({ onSearch }) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search tracks using Spotify API"
-        ></input>
+        />
         <button onClick={handleSearch}>Find Tracks</button>
-        <div>
-          {searchResults.map((result) => (
-            <div key={result.id}>
-              <p>{result.name}</p> | <p>{result.artist}</p> |{" "}
-              <p>{result.album}</p>
-            </div>
-          ))}
-        </div>
+      </div>
+
+      <div>
+        {searchResults.map((result) => (
+          <div key={result.id}>
+            <p>{result.name}</p> | <p>{result.artist}</p> |<p>{result.album}</p>
+          </div>
+        ))}
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import TrackList from "./TrackList";
+import "./styles/Playlist.css";
 
 const Playlist = ({
   playlistName,
@@ -21,18 +22,21 @@ const Playlist = ({
   };
 
   return (
-    <div className="playlist">
-      <input
-        value={playlistName}
-        onChange={handleNameChange}
-        onFocus={handleFocus}
-        placeholder="Give your playlist a name"
-      />
-      <button onClick={handleSave}>Save</button>
-      <h2>{savedPlaylistName}</h2>
-
+    <>
+      <div className="playlist">
+        <div className="playlistTitle">
+          <input
+            value={playlistName}
+            onChange={handleNameChange}
+            onFocus={handleFocus}
+            placeholder="Give your playlist a name"
+          />
+          <button onClick={handleSave}>Save</button>
+        </div>
+        <h2>{savedPlaylistName}</h2>
+      </div>
       <TrackList tracks={playlistTracks} />
-    </div>
+    </>
   );
 };
 
