@@ -2,30 +2,31 @@ import React, { useState } from "react";
 import "./App.css";
 import Playlist from "./components/Playlist";
 import TrackList from "./components/TrackList";
+import Search from "./components/Search";
 
 function App() {
   // Set the initial state of tracks
   const [tracks] = useState([
     {
       id: 1,
-      name: "Add this Song",
+      name: "Song One",
       artist: "Artist 1",
       album: "Album 1",
     },
     {
       id: 2,
-      name: "Add this Song 2",
+      name: "Song Two",
       artist: "Artist 2",
       album: "Album 2",
     },
     {
       id: 3,
-      name: "Add this Song 3",
+      name: "Song Three",
       artist: "Artist 3",
       album: "Album 3",
     },
   ]);
-  const [playlistName, setPlaylistName] = useState("Enter a Playlist Name");
+  const [playlistName, setPlaylistName] = useState("");
   const [playlistTracks, setPlaylistTracks] = useState([
     {
       id: 0,
@@ -36,6 +37,22 @@ function App() {
   ]);
   const [savedPlaylistName, setSavedPlaylistName] = useState("");
 
+  const onSearch = (query) => {
+    const lowercaseQuery = query.toLowerCase();
+
+    const searchResults = tracks.filter((track) => {
+      const lowercaseName = track.name.toLowerCase();
+      const lowercaseArtist = track.artist.toLowerCase();
+      const lowercaseAlbum = track.album.toLowerCase();
+
+      return (
+        lowercaseName.includes(lowercaseQuery) ||
+        lowercaseArtist.includes(lowercaseQuery) ||
+        lowercaseAlbum.includes(lowercaseQuery)
+      );
+    });
+    return Promise.resolve(searchResults);
+  };
   const addTrack = (track) => {
     setPlaylistTracks((prevTracks) => {
       if (!prevTracks.some((t) => t.id === track.id)) {
@@ -44,6 +61,7 @@ function App() {
       return prevTracks;
     });
   };
+
   const updatePlaylistName = (name) => {
     setPlaylistName(name);
   };
@@ -55,11 +73,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Jammmin - Share your playlist with friends</h1>
+        <h2>Jammmin - Share your playlist with friends</h2>
       </header>
       <div className="row">
         <div className="column">
           <h2>Add Tracks to your Playlist</h2>
+          <Search onSearch={onSearch} />
           <TrackList tracks={tracks} onAdd={addTrack} />
         </div>
 

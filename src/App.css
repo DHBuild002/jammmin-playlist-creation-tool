@@ -14,8 +14,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 50vh;
+  background-color: #079356;
+  min-height: 22vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,14 +25,14 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #c0c0c0;
 }
 .row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  background-color: rgb(103, 197, 240);
+  background-color: rgb(224, 239, 246);
   align-items: stretch;
   justify-content: space-evenly ;
 }

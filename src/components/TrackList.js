@@ -6,7 +6,9 @@ const TrackList = ({ tracks, onAdd }) => {
   return (
     <div className="track-list">
       {tracks.map((track) => (
+        <div key={track.id} className="trackContainer">
         <Track key={track.id} track={track} onAdd={onAdd} />
+        </div>
       ))}
     </div>
   );

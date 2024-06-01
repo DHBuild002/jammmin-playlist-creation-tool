@@ -1,0 +1,9 @@
+input {
+    border-style: none;
+    width: 50%;
+    padding: 15px;
+    border-radius: 8px;
+}
+.searchBox {
+    margin: 5px;
+} 

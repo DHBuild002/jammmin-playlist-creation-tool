@@ -26,7 +26,7 @@ const Playlist = ({
         value={playlistName}
         onChange={handleNameChange}
         onFocus={handleFocus}
-        placeholder="Enter playlist name"
+        placeholder="Give your playlist a name"
       />
       <button onClick={handleSave}>Save</button>
       <h2>{savedPlaylistName}</h2>

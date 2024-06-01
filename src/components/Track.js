@@ -7,15 +7,21 @@ const Track = ({ track, onAdd }) => {
   };
   return (
     <>
-      <div className="track">
-        <h2>{track.name}</h2>
-        <p>
-          {track.artist} | {track.album}
-        </p>
+      <div className="trackContainer">
+        <div className="track">
+          <div className="track-info">
+            <h2>{track.name}</h2>
+            <p>
+              {track.artist} | {track.album}
+            </p>
+          </div>
+          <div className="buttonArea">
+            <button className="add-track-btn" onClick={handleAdd}>
+              Add
+            </button>
+          </div>
+        </div>
       </div>
-      <button className="add-track-btn" onClick={handleAdd}>
-        Add
-      </button>
     </>
   );
 };
