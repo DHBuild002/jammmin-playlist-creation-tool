@@ -36,6 +36,7 @@ function App() {
     },
   ]);
   const [savedPlaylistName, setSavedPlaylistName] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const onSearch = (query) => {
     const lowercaseQuery = query.toLowerCase();
@@ -79,7 +80,7 @@ function App() {
         <div className="column">
           <h2>Add Tracks to your Playlist</h2>
           <Search onSearch={onSearch} />
-          <TrackList tracks={tracks} onAdd={addTrack} />
+          <TrackList tracks={searchResults} onAdd={addTrack} />
         </div>
 
         <div className="column">

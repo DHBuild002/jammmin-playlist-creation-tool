@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./styles/Search.css";
+import Track from "./Track";
 
 const Search = ({ onSearch }) => {
   const [query, setQuery] = useState("");
@@ -27,7 +28,7 @@ const Search = ({ onSearch }) => {
       <div>
         {searchResults.map((result) => (
           <div key={result.id}>
-            <p>{result.name}</p> | <p>{result.artist}</p> |<p>{result.album}</p>
+            <Track track={result} />
           </div>
         ))}
       </div>
