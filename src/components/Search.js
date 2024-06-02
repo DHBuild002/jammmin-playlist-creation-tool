@@ -25,11 +25,9 @@ const Search = ({ onSearch }) => {
         <button onClick={handleSearch}>Find Tracks</button>
       </div>
 
-      <div>
+      <div className="track-list">
         {searchResults.map((result) => (
-          <div key={result.id}>
-            <Track track={result} />
-          </div>
+          <Track track={result} id={result.id} />
         ))}
       </div>
     </>
