@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
-import Playlist from "./components/Playlist";
 import TrackList from "./components/TrackList";
+import Playlist from "./components/Playlist";
 import Search from "./components/Search";
 
 function App() {
@@ -62,6 +62,11 @@ function App() {
       return prevTracks;
     });
   };
+  const removeTrack = (track) => {
+    setPlaylistTracks((prevTracks) =>
+      prevTracks.filter((t) => t.id !== track.id)
+    );
+  };
 
   const updatePlaylistName = (name) => {
     setPlaylistName(name);
@@ -80,6 +85,7 @@ function App() {
         <div className="column">
           <h2>Add Tracks to your Playlist</h2>
           <Search onSearch={onSearch} />
+
           <TrackList tracks={searchResults} onAdd={addTrack} />
         </div>
 
@@ -90,6 +96,7 @@ function App() {
             playlistTracks={playlistTracks}
             onNameChange={updatePlaylistName}
             saveEvent={savePlaylistName}
+            onRemove={removeTrack}
           />
         </div>
       </div>

@@ -1,10 +1,16 @@
 import React from "react";
 
-const Track = ({ track, onAdd }) => {
+const Track = ({ track, onAdd, onRemove, isRemoval }) => {
   const handleAdd = () => {
     console.log("Add button clicked!");
     onAdd(track);
   };
+
+  const handleRemove = () => {
+    console.log("Remove button clicked!");
+    onRemove(track);
+  };
+
   return (
     <>
       <div className="trackContainer">
@@ -16,9 +22,15 @@ const Track = ({ track, onAdd }) => {
             </p>
           </div>
           <div className="buttonArea">
-            <button className="add-track-btn" onClick={handleAdd}>
+            {/* {isRemoval ? (
+              <button className="Track-action" onClick={handleRemove}>
+                -
+              </button>
+            ) : ( */}
+            <button className="Track-action" onClick={handleAdd}>
               +
             </button>
+            {/* // )} */}
           </div>
         </div>
       </div>
