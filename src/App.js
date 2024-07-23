@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
-import Playlist from "./components/Playlist";
-import TrackList from "./components/TrackList";
-import Search from "./components/Search";
 
-function App() {
+// Imports
+import Playlist from "./components/scripts/Playlist";
+import SearchResults from "./components/scripts/SearchResults";
+
+const App = () => {
   // Set the initial state of tracks
   const [tracks] = useState([
     {
@@ -79,8 +80,7 @@ function App() {
       <div className="row">
         <div className="column">
           <h2>Add Tracks to your Playlist</h2>
-          <Search onSearch={onSearch} />
-          <TrackList tracks={searchResults} onAdd={addTrack} />
+          <SearchResults tracks={searchResults} onAdd={addTrack} />
         </div>
 
         <div className="column">
@@ -95,6 +95,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
