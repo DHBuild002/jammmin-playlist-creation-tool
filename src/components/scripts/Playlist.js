@@ -18,7 +18,7 @@ const Playlist = (props) => {
       <TrackList
         tracks={props.playlistTracks}
         isRemoval={true}
-        onremove={props.onRemove}
+        onRemove={props.onRemove}
       />
 
       <button className="Playlist-save" onClick={props.onSave}>

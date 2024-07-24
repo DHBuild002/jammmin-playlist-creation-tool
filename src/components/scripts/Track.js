@@ -19,7 +19,7 @@ const Track = (props) => {
     if (props.isRemoval) {
       return (
         <button className="Track-action" onClick={removeTrack}>
-          -
+          Remove Track
         </button>
       );
     }
