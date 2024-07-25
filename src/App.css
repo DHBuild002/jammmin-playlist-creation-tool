@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  box-sizing: border-box;
 }
 
 .App-logo {
@@ -31,32 +30,39 @@
 }
 .container{
   display: flex;
-  width: 100%;
   flex-direction: row;
+  flex-grow: 1;
+  width: 100vw
 }
 .row {
   display: flex;
   flex-direction: row;
-  flex: 1;
-  width: 400px;
+  flex-wrap: nowrap;
+  width: 100%;
   background-color: rgb(224, 239, 246);
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 0;
+  flex-grow: 1; 
+  height: 100%;
 }
 .column {
   display: flex;
-  gap: 10px;
+  margin: 0px;
   flex-direction: column;
+  flex-basis: 100%;
   align-items: flex-start;
-  background: rgba(213, 79, 247, 0.747);
-  flex-grow: 0;
-}
-.addTracks{
-  border: 1px solid red;
-}
-.customPlaylist{
-  border: 1px solid blue;
+  padding: 1rem;
+  background-color: purple;
 }
 
+.border1{
+  border: 1px solid red;
+
+}
+.border2{
+  border: 1px solid blue;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
