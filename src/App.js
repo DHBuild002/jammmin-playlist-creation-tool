@@ -74,23 +74,26 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Jammmin - Share your playlist with friends</h2>
+        <h2>Jammmin</h2>
       </header>
-      <div className="row">
-        <div className="column">
-          <h2>Add Tracks to your Playlist</h2>
-          <Search onSearch={onSearch} />
-          <TrackList tracks={searchResults} onAdd={addTrack} />
+      <div className="container">
+        <div className="row addTracks">
+          <div className="column">
+            <h2>Add Tracks to your Playlist</h2>
+            <Search onSearch={onSearch} />
+            <TrackList tracks={searchResults} onAdd={addTrack} />
+          </div>
         </div>
-
-        <div className="column">
-          <Playlist
-            savedPlaylistName={savedPlaylistName}
-            playlistName={playlistName}
-            playlistTracks={playlistTracks}
-            onNameChange={updatePlaylistName}
-            saveEvent={savePlaylistName}
-          />
+        <div className="row customPlaylist">
+          <div className="column">
+            <Playlist
+              savedPlaylistName={savedPlaylistName}
+              playlistName={playlistName}
+              playlistTracks={playlistTracks}
+              onNameChange={updatePlaylistName}
+              saveEvent={savePlaylistName}
+            />
+          </div>
         </div>
       </div>
     </div>

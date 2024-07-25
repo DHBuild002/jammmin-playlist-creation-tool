@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  box-sizing: border-box;
 }
 
 .App-logo {
@@ -28,23 +29,32 @@
 .App-link {
   color: #c0c0c0;
 }
+.container{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
 .row {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
+  flex: 1;
+  width: 400px;
   background-color: rgb(224, 239, 246);
-  align-items: flex-start;
-  justify-content: space-between;
+  justify-content: center;
 }
 .column {
   display: flex;
-  margin: 0px;
+  gap: 10px;
   flex-direction: column;
-  flex-basis: 100%;
   align-items: flex-start;
-  flex: 1;
-  padding: 1rem;
+  background: rgba(213, 79, 247, 0.747);
+  flex-grow: 0;
+}
+.addTracks{
+  border: 1px solid red;
+}
+.customPlaylist{
+  border: 1px solid blue;
 }
 
 @keyframes App-logo-spin {
