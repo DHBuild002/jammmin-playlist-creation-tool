@@ -78,13 +78,13 @@ function App() {
       </header>
       <div className="container">
         <div className="row border1">
-          <div className="column">
+          <div className="column left-col">
             <h2>Add Tracks to your Playlist</h2>
             <Search onSearch={onSearch} />
             <TrackList tracks={searchResults} onAdd={addTrack} />
           </div>
 
-          <div className="column border2">
+          <div className="column border2 right-col">
             <Playlist
               savedPlaylistName={savedPlaylistName}
               playlistName={playlistName}

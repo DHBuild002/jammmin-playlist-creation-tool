@@ -30,38 +30,31 @@
 }
 .container{
   display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  width: 100vw
+  gap: 25%;
+  align-self: center;
 }
 .row {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
-  background-color: rgb(224, 239, 246);
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  flex-basis: 0;
-  flex-grow: 1; 
-  height: 100%;
+  column-gap: 10px;  
+  margin-top: 10%;  
 }
 .column {
-  display: flex;
-  margin: 0px;
-  flex-direction: column;
-  flex-basis: 100%;
-  align-items: flex-start;
-  padding: 1rem;
-  background-color: purple;
+  width: 25%;
+  height: 450px;
+  background: #e5b7f882;
 }
 
 .border1{
-  border: 1px solid red;
+  border: 0px solid red;
 
 }
 .border2{
-  border: 1px solid blue;
+  border: 0px solid blue;
 }
 @keyframes App-logo-spin {
   from {
