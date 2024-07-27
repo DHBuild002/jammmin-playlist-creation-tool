@@ -13,8 +13,8 @@ const Search = ({ onSearch }) => {
 
   return (
     <>
+      <h4>Search tracks on Spotify</h4>
       <div className="search">
-        <h4>Search tracks on Spotify</h4>
         <input
           className="input searchBox"
           type="text"
