@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    flex-direction: column;
   }
 
 .playlist input {
@@ -10,11 +11,15 @@
     margin-right: 0rem;
   }
   .playlist button {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
     border: 1px solid #adc0ff;
     border-radius: 5px;
     cursor: pointer;
   }
   .playlistTitle {
-    margin-top: 1rem;
+    margin-top: .5rem;
+    width: 100%;
+  }
+  .custom-title {
+    font-size: 25px;
   }

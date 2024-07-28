@@ -79,7 +79,6 @@ function App() {
       <div className="container">
         <div className="row border1">
           <div className="column left-col">
-            <h2>Add Tracks to your Playlist</h2>
             <Search onSearch={onSearch} />
             <TrackList tracks={searchResults} onAdd={addTrack} />
           </div>

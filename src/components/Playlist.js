@@ -24,6 +24,7 @@ const Playlist = ({
   return (
     <>
       <div className="playlist">
+        <h2 className="custom-title">{savedPlaylistName}</h2>
         <div className="playlistTitle">
           <input
             value={playlistName}
@@ -33,7 +34,6 @@ const Playlist = ({
           />
           <button onClick={handleSave}>Save</button>
         </div>
-        <h2>{savedPlaylistName}</h2>
       </div>
       <TrackList tracks={playlistTracks} />
     </>
