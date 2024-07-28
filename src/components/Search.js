@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import "./styles/Search.css";
 import Track from "./Track";
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, onAdd }) => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const handleAdd = (track) => {
+    console.log("Track added:", track);
+  };
   const handleSearch = () => {
     onSearch(query).then((results) => {
       setSearchResults(results);
@@ -24,10 +27,10 @@ const Search = ({ onSearch }) => {
         />
         <button onClick={handleSearch}>Find Tracks</button>
       </div>
-      
+
       <div className="track-list">
         {searchResults.map((result) => (
-          <Track track={result} id={result.id} />
+          <Track track={result} id={result.id} onAdd={handleAdd} />
         ))}
       </div>
     </>
