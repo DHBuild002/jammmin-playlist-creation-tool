@@ -79,7 +79,7 @@ function App() {
       <div className="container">
         <div className="row border1">
           <div className="column left-col">
-            <Search onSearch={parseQuery} />
+            <Search onSearch={parseQuery} onAdd={addTrack} />
             <TrackList tracks={searchResults} onAdd={addTrack} />
           </div>
 

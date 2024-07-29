@@ -2,7 +2,6 @@ import React from "react";
 
 const Track = ({ track, onAdd }) => {
   const handleAdd = () => {
-    console.log("Add button clicked!");
     onAdd(track);
   };
   return (
