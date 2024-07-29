@@ -38,7 +38,7 @@ function App() {
   const [savedPlaylistName, setSavedPlaylistName] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const onSearch = (query) => {
+  const parseQuery = (query) => {
     const lowercaseQuery = query.toLowerCase();
 
     const searchResults = tracks.filter((track) => {
@@ -74,12 +74,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Jammmin - Share your playlist with friends</h2>
+        <h2>Jammmin</h2>
       </header>
       <div className="container">
         <div className="row border1">
           <div className="column left-col">
-            <Search onSearch={onSearch} />
+            <Search onSearch={parseQuery} />
             <TrackList tracks={searchResults} onAdd={addTrack} />
           </div>
 

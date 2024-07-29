@@ -7,6 +7,7 @@ const Search = ({ onSearch, onAdd }) => {
   const [searchResults, setSearchResults] = useState([]);
   const handleAdd = (track) => {
     console.log("Track added:", track);
+    onAdd(track);
   };
   const handleSearch = () => {
     onSearch(query).then((results) => {
