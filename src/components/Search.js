@@ -30,7 +30,12 @@ const Search = ({ onSearch, onAdd }) => {
 
       <div className="track-list">
         {searchResults.map((result) => (
-          <Track track={result} id={result.id} onAdd={handleAdd} />
+          <Track
+            key={result.id}
+            track={result}
+            id={result.id}
+            onAdd={handleAdd}
+          />
         ))}
       </div>
     </>
