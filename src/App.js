@@ -27,14 +27,7 @@ function App() {
     },
   ]);
   const [playlistName, setPlaylistName] = useState("");
-  const [playlistTracks, setPlaylistTracks] = useState([
-    {
-      id: 0,
-      name: "Default Playlist Entry",
-      artist: "Artist X",
-      album: "Album Y",
-    },
-  ]);
+  const [playlistTracks, setPlaylistTracks] = useState([]);
   const [savedPlaylistName, setSavedPlaylistName] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -79,7 +72,9 @@ function App() {
       <div className="container">
         <div className="row border1">
           <div className="column left-col">
+            {/* Search Module */}
             <Search onSearch={parseQuery} onAdd={addTrack} />
+            {/* Results of Search in Tracklist format */}
             <TrackList tracks={searchResults} onAdd={addTrack} />
           </div>
 
