@@ -1,8 +1,28 @@
 import React from "react";
 
-const Track = ({ track, onAdd }) => {
+import "./styles/Track.css";
+
+const Track = ({ track, onAdd, onRemove }) => {
   const handleAdd = () => {
     onAdd(track);
+  };
+  const handleRemove = () => {
+    onRemove(track);
+  };
+
+  const renderAction = () => {
+    if (onRemove) {
+      return (
+        <button className="track-action" onClick={handleRemove}>
+          Remove
+        </button>
+      );
+    }
+    return (
+      <button className="track-action" onClick={handleAdd}>
+        Add
+      </button>
+    );
   };
   return (
     <>
@@ -14,11 +34,7 @@ const Track = ({ track, onAdd }) => {
               {track.artist} | {track.album}
             </p>
           </div>
-          <div className="buttonArea">
-            <button className="add-track-btn" onClick={handleAdd}>
-              Add to Playlist
-            </button>
-          </div>
+          {renderAction()}
         </div>
       </div>
     </>

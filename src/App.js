@@ -63,6 +63,9 @@ function App() {
   const savePlaylistName = (name) => {
     setSavedPlaylistName(name);
   };
+  const removeTrack = () => {
+    console.log("Track Removed:");
+  };
 
   return (
     <div className="App">
