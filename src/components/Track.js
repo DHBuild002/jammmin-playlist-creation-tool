@@ -2,16 +2,17 @@ import React from "react";
 
 import "./styles/Track.css";
 
-const Track = ({ track, onAdd, onRemove }) => {
+const Track = ({ track, onAdd, onRemove, isRemoval }) => {
   const handleAdd = () => {
     onAdd(track);
   };
   const handleRemove = () => {
+    console.log("Remove Clicked");
     onRemove(track);
   };
 
   const renderAction = () => {
-    if (onRemove) {
+    if (isRemoval) {
       return (
         <button className="track-action" onClick={handleRemove}>
           Remove

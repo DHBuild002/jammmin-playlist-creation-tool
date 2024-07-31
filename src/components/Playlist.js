@@ -8,6 +8,7 @@ const Playlist = ({
   onNameChange,
   saveEvent,
   savedPlaylistName,
+  onRemove,
 }) => {
   const handleFocus = (e) => {
     if (e.target.value) {
@@ -36,7 +37,7 @@ const Playlist = ({
         </div>
       </div>
       <h2>TrackList</h2>
-      <TrackList tracks={playlistTracks} />
+      <TrackList tracks={playlistTracks} onRemove={onRemove} />
     </>
   );
 };

@@ -63,8 +63,11 @@ function App() {
   const savePlaylistName = (name) => {
     setSavedPlaylistName(name);
   };
-  const removeTrack = () => {
-    console.log("Track Removed:");
+  const removeTrack = (track) => {
+    console.log("Removing Track...");
+    setPlaylistTracks(
+      playlistTracks.filter((existingTrack) => existingTrack.id !== track.id)
+    );
   };
 
   return (
@@ -88,6 +91,7 @@ function App() {
               playlistTracks={playlistTracks}
               onNameChange={updatePlaylistName}
               saveEvent={savePlaylistName}
+              onRemove={removeTrack}
             />
           </div>
         </div>
