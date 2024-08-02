@@ -2,6 +2,9 @@ import React from "react";
 import TrackList from "./TrackList";
 import "./styles/Playlist.css";
 
+// Icon List
+import EditIcon from "@mui/icons-material/Edit";
+
 const Playlist = ({
   playlistName,
   playlistTracks,
@@ -25,7 +28,10 @@ const Playlist = ({
   return (
     <>
       <div className="playlist">
-        <h2 className="custom-title">{savedPlaylistName}</h2>
+        <div className="row input-area">
+          <h2 className="custom-title">{savedPlaylistName}</h2>
+          <EditIcon />
+        </div>
         <div className="playlistTitle">
           <input
             value={playlistName}
