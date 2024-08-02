@@ -24,12 +24,35 @@
     font-size: 25px;
   }
   .input-area {
-    border-bottom: rgb(191, 46, 223) 1px solid;
-    width: auto;
+    border-bottom: rgb(169, 27, 201) 1px solid;
+    width: 33.333%;
+    padding: 5px;
     border-radius: 9px;
-    color: purple;
+    outline: none;
+    color: rgb(195, 134, 195);
     cursor: pointer;
   }
   .input-area > h2 {
     margin-right: 20px;
+    margin-bottom: 6px;
+  }
+  .input-custom-title{
+    border: none;
+    background: transparent;
+    width: 100%;
+    color: rgb(195, 134, 195);
+  }
+  .input-custom-title:focus{
+    border: none;
+    outline: none; 
+    cursor: pointer;   
+  }
+  button{
+    padding: 0.5rem 1rem;
+    border: 1px solid #adc0ff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: purple;
+    color: white;
   }
