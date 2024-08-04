@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TrackList from "./TrackList";
 import "./styles/Playlist.css";
 
@@ -26,7 +26,12 @@ const Playlist = ({
   };
   const handleSave = () => {
     saveEvent(playlistName);
+    setIsInputVisible(false);
   };
+  const handledEditClick = () => {
+    setIsInputVisible(true);
+  };
+  const [isInputVisible, setIsInputVisible] = useState(false);
   return (
     <>
       <div className="playlist">
@@ -37,19 +42,23 @@ const Playlist = ({
           >
             {savedPlaylistName}
           </h2>
-          <EditIcon onClick={handleNameChange} className="edit-icon" />
+          <EditIcon onClick={handledEditClick} className="edit-icon" />
         </div>
-        <div className="row input-area">
-          <input
-            className="input-custom-title"
-            value={playlistName}
-            onChange={handleNameChange}
-            onFocus={handleFocus}
-          />
-        </div>
-        <div className="playlistTitle">
-          <button onClick={handleSave}>Save</button>
-        </div>
+        {isInputVisible && (
+          <div>
+            <div className="row input-area">
+              <input
+                className="input-custom-title"
+                value={playlistName}
+                onChange={handleNameChange}
+                onFocus={handleFocus}
+              />
+            </div>
+            <div className="playlistTitle">
+              <button onClick={handleSave}>Save</button>
+            </div>
+          </div>
+        )}
       </div>
       <h2>TrackList</h2>
       <TrackList tracks={playlistTracks} onRemove={onRemove} />
