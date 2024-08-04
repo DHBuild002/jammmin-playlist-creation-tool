@@ -23,6 +23,10 @@
   }
 
   /* Custom Playlist Title Header Section */
+  /* Initial State of Header Text */
+  .initial-state-input {
+    color: rgb(230, 153, 247);
+  }
   .custom-title-container {
     display: flex;
     justify-content: center;

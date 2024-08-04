@@ -30,7 +30,9 @@ function App() {
     "Enter a name for your playlist"
   );
   const [playlistTracks, setPlaylistTracks] = useState([]);
-  const [savedPlaylistName, setSavedPlaylistName] = useState("");
+  // Track pageload state for Header Text
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [savedPlaylistName, setSavedPlaylistName] = useState("New Playlist");
   const [searchResults, setSearchResults] = useState([]);
 
   const parseQuery = (query) => {
@@ -64,6 +66,7 @@ function App() {
 
   const savePlaylistName = (name) => {
     setSavedPlaylistName(name);
+    setIsInitialLoad(false);
   };
   const removeTrack = (track) => {
     console.log("Removing Track...");
@@ -90,6 +93,7 @@ function App() {
             <Playlist
               savedPlaylistName={savedPlaylistName}
               playlistName={playlistName}
+              isInitialLoad={isInitialLoad}
               playlistTracks={playlistTracks}
               onNameChange={updatePlaylistName}
               saveEvent={savePlaylistName}

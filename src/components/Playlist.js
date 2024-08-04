@@ -12,7 +12,10 @@ const Playlist = ({
   saveEvent,
   savedPlaylistName,
   onRemove,
+  isInitialLoad,
 }) => {
+  // Handle initial state class for save playlist name:
+  const savedNameClass = isInitialLoad ? "initial-state-input" : "";
   const handleFocus = (e) => {
     if (e.target.value) {
       e.target.value = "";
@@ -28,7 +31,10 @@ const Playlist = ({
     <>
       <div className="playlist">
         <div className="custom-title-container">
-          <h2 className="custom-title" placeholder="New Playlist">
+          <h2
+            className={`custom-title ${savedNameClass}`}
+            placeholder="New Playlist"
+          >
             {savedPlaylistName}
           </h2>
           <EditIcon onClick={handleNameChange} className="edit-icon" />
