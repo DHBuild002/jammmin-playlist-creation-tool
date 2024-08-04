@@ -26,7 +26,9 @@ function App() {
       album: "Album 3",
     },
   ]);
-  const [playlistName, setPlaylistName] = useState("");
+  const [playlistName, setPlaylistName] = useState(
+    "Enter a name for your playlist"
+  );
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [savedPlaylistName, setSavedPlaylistName] = useState("");
   const [searchResults, setSearchResults] = useState([]);

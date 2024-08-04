@@ -1,13 +1,18 @@
 .playlist {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.playlist > * {
+  flex: 50%;
+}
 
 .playlist input {
     flex: 1;
-    padding: 0.5rem;
+    padding: 0rem;
     margin-right: 0rem;
   }
   .playlist button {
@@ -16,6 +21,13 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+  /* Custom Playlist Title Header Section */
+  .custom-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .playlistTitle {
     margin-top: .5rem;
     width: 100%;
@@ -23,6 +35,11 @@
   .custom-title {
     font-size: 25px;
   }
+  .edit-icon {
+    color: rgb(230, 153, 247);
+    margin-left: 1%;
+  }
+  /* User Text Input Section */
   .input-area {
     border-bottom: rgb(169, 27, 201) 1px solid;
     width: 33.333%;

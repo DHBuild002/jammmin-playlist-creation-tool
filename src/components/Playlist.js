@@ -27,16 +27,19 @@ const Playlist = ({
   return (
     <>
       <div className="playlist">
-        <h2 className="custom-title">{savedPlaylistName}</h2>
+        <div className="custom-title-container">
+          <h2 className="custom-title" placeholder="New Playlist">
+            {savedPlaylistName}
+          </h2>
+          <EditIcon onClick={handleNameChange} className="edit-icon" />
+        </div>
         <div className="row input-area">
           <input
             className="input-custom-title"
             value={playlistName}
             onChange={handleNameChange}
             onFocus={handleFocus}
-            placeholder="Give your playlist a name"
           />
-          <EditIcon onClick={handleNameChange} />
         </div>
         <div className="playlistTitle">
           <button onClick={handleSave}>Save</button>
