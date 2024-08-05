@@ -26,9 +26,7 @@ function App() {
       album: "Album 3",
     },
   ]);
-  const [playlistName, setPlaylistName] = useState(
-    "Enter a name for your playlist"
-  );
+  const [playlistName, setPlaylistName] = useState("");
   const [playlistTracks, setPlaylistTracks] = useState([]);
   // Track pageload state for Header Text
   const [isInitialLoad, setIsInitialLoad] = useState(true);

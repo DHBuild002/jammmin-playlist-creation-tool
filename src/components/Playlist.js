@@ -60,7 +60,7 @@ const Playlist = ({
           </div>
         )}
       </div>
-      <h2>TrackList</h2>
+      {/* <h2>TrackList</h2> */}
       <TrackList tracks={playlistTracks} onRemove={onRemove} />
     </>
   );
