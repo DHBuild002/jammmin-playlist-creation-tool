@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -31,6 +31,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
   }
   .playlistTitle {
     margin-top: .5rem;
@@ -42,11 +43,12 @@
   .edit-icon {
     color: rgb(230, 153, 247);
     margin-left: 1%;
+    cursor: pointer;
   }
   /* User Text Input Section */
   .input-area {
     border-bottom: rgb(169, 27, 201) 1px solid;
-    width: 33.333%;
+    width: 100%;
     padding: 5px;
     border-radius: 9px;
     outline: none;
@@ -62,6 +64,7 @@
     background: transparent;
     width: 100%;
     color: rgb(195, 134, 195);
+
   }
   .input-custom-title:focus{
     border: none;
