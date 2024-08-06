@@ -1,18 +1,32 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./styles/Search.css";
 import Track from "./Track";
 
 const Search = ({ onSearch, onAdd }) => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+
   const handleAdd = (track) => {
     console.log("Track added:", track);
     onAdd(track);
   };
-  const handleSearch = () => {
-    onSearch(query).then((results) => {
-      setSearchResults(results);
-    });
+
+  const handleSearch = async () => {
+    // Fixed Dataset manually entered as an array of tracks in the app.js file for offline testing:
+    // onSearch(query).then((results) => {
+    //   setSearchResults(results);
+    // });
+    try {
+      const response = await axios.get("http://localhost:3001/search", {
+        params: {
+          query: query,
+        },
+      });
+      setSearchResults(response.data.tracks.items);
+    } catch (error) {
+      console.error("There was an error fetching the tracks!", error);
+    }
   };
 
   return (
