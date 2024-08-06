@@ -10,6 +10,11 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "qs": "^6.13.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
@@ -19,7 +24,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "concurrently \"npm run server\" \"npm run client\"",
+    "server-js": "node server/server.js",
+    "client": "npm start --prefix client",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "install-all": "npm run install-client && npm run install-server"
   },
   "eslintConfig": {
     "extends": [
@@ -38,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
