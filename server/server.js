@@ -31,20 +31,25 @@ const getAccessToken = async () => {
 
 app.get("/search", async (req, res) => {
   const query = req.query.query;
-  const token = await getAccessToken();
+  try {
+    const token = await getAccessToken();
 
-  const search_url = "https://api.spotify.com/v1/search";
-  const response = await axios.get(search_url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      q: query,
-      type: "track",
-      limit: 10,
-    },
-  });
-  res.json(response.data);
+    const search_url = "https://api.spotify.com/v1/search";
+    const response = await axios.get(search_url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        q: query,
+        type: "track",
+        limit: 10,
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error in /search endpoint:", error);
+    res.status(500).send("Error performing search");
+  }
 });
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

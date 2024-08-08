@@ -23,9 +23,23 @@ const Search = ({ onSearch, onAdd }) => {
           query: query,
         },
       });
+      console.log("Search results:", response.data.tracks.items); // Log for debugging
       setSearchResults(response.data.tracks.items);
     } catch (error) {
-      console.error("There was an error fetching the tracks!", error);
+      if (error.response) {
+        // The request was made, and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error data:", error.response.data);
+        console.error("Error status:", error.response.status);
+        console.error("Error headers:", error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error setting up request:", error.message);
+      }
+      console.error("Error config:", error.config);
     }
   };
 
