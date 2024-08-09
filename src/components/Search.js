@@ -23,8 +23,11 @@ const Search = ({ onSearch, onAdd }) => {
           query: query,
         },
       });
-      console.log("Search results:", response.data.tracks.items); // Log for debugging
-      setSearchResults(response.data.tracks.items);
+      const returnedTracks = Array.isArray(response.data.tracks.items)
+        ? response.data.tracks.items
+        : [];
+      console.log("Search results:", returnedTracks); // Log for debugging
+      setSearchResults(returnedTracks);
     } catch (error) {
       if (error.response) {
         // The request was made, and the server responded with a status code
