@@ -26,8 +26,18 @@ const Search = ({ onSearch, onAdd }) => {
       const returnedTracks = Array.isArray(response.data.tracks.items)
         ? response.data.tracks.items
         : [];
+      if (Array.isArray(returnedTracks)) {
+        setSearchResults(returnedTracks); // Only set state if it's an array
+      } else {
+        console.error("Expected an array, but got:", typeof returnedTracks);
+      }
       console.log("Search results:", returnedTracks); // Log for debugging
-      setSearchResults(returnedTracks);
+      console.log(
+        "Type of returned data:",
+        Array.isArray(response.data.tracks.items)
+      ); // Should log 'true'
+
+      // setSearchResults(returnedTracks);
     } catch (error) {
       if (error.response) {
         // The request was made, and the server responded with a status code
@@ -59,16 +69,14 @@ const Search = ({ onSearch, onAdd }) => {
         />
         <button onClick={handleSearch}>Find Tracks</button>
       </div>
-
       <div className="track-list">
-        {searchResults.map((result) => (
-          <Track
-            key={result.id}
-            track={result}
-            id={result.id}
-            onAdd={handleAdd}
-          />
-        ))}
+        {searchResults.length > 0 ? (
+          searchResults.map((result) => (
+            <Track key={result.id} track={result} onAdd={handleAdd} />
+          ))
+        ) : (
+          <p>No results found</p>
+        )}
       </div>
     </>
   );
