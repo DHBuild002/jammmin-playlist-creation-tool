@@ -42,7 +42,7 @@ app.get("/search", async (req, res) => {
       params: {
         q: query,
         type: "track",
-        limit: 10,
+        limit: 3,
       },
     });
     res.json(response.data);

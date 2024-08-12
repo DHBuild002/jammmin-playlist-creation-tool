@@ -28,6 +28,13 @@ const Search = ({ onSearch, onAdd }) => {
         : [];
       if (Array.isArray(returnedTracks)) {
         setSearchResults(returnedTracks); // Only set state if it's an array
+        returnedTracks.forEach((track) => {
+          if (track.artists && Array.isArray(track.artists)) {
+            console.log("Artist name:", track.artists[0].name);
+          } else {
+            console.error("No artists found for track:", track.name);
+          }
+        });
       } else {
         console.error("Expected an array, but got:", typeof returnedTracks);
       }
@@ -72,7 +79,17 @@ const Search = ({ onSearch, onAdd }) => {
       <div className="track-list">
         {searchResults.length > 0 ? (
           searchResults.map((result) => (
-            <Track key={result.id} track={result} onAdd={handleAdd} />
+            <Track
+              key={result.id}
+              track={result.name}
+              artist={
+                result.artists && result.artists[0]
+                  ? result.artists[0].name
+                  : "Unknown Artist"
+              }
+              album={result.album.name}
+              onAdd={handleAdd}
+            />
           ))
         ) : (
           <p>No results found</p>

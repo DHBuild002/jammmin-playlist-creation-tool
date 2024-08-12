@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles/Track.css";
 
-const Track = ({ track, onAdd, onRemove, isRemoval }) => {
+const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
   const handleAdd = () => {
     onAdd(track);
   };
@@ -29,20 +29,11 @@ const Track = ({ track, onAdd, onRemove, isRemoval }) => {
     <>
       <div className="trackContainer">
         <div className="track">
-          <img
-            src={track.album.images[0]?.url} // Album cover image
-            alt={track.name}
-            className="track-image"
-          />
           <div className="track-info">
-            <h2>{track.name}</h2>
+            <h2>{track}</h2>
             <p>
-              {track.artist} | {track.album}
+              {artist} | {album}
             </p>
-          </div>
-          <div className="track-info">
-            <h5>{track.name}</h5> {/* Track name */}
-            {<p>{track.artists.map((artist) => artist.name).join(", ")}</p>}
             {renderAction()}
           </div>
         </div>
