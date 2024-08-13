@@ -35,7 +35,9 @@
   }
   .track-info {
     flex-grow: 1;
-    margin: 0;
+    display: flex;
+    padding: 15px;
+    flex-direction: column;
   }
   .buttonArea{
     display: flex;
@@ -43,10 +45,11 @@
     justify-content: center;
     padding: 0px;
     border: 1px solid rgb(167, 35, 211);
-    width: auto;
+    width: 100%;
     min-width: 100px;
-    height: 100px;
+    height: 200px;
     box-sizing: border-box;
+    margin-top: 10px;
   }
   .add-track-btn {
     border-style: none;
