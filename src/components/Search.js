@@ -100,7 +100,7 @@ const Search = ({ onSearch, onAdd }) => {
         // />
         // */}
 
-        <TrackList tracks={searchResults} onAdd={handleAdd} />
+        <TrackList tracks={searchResults} onAdd={handleAdd} isRemoval={false} />
       </div>
     </>
   );
