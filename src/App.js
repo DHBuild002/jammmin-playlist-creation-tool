@@ -31,10 +31,21 @@ function App() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [savedPlaylistName, setSavedPlaylistName] = useState("New Playlist");
   const [searchResults] = useState([]);
+  const [isPlaylistSaved, setIsPlaylistSaved] = useState(false); // New state
 
   const [playlistTracks, setPlaylistTracks] = useState([
-    { name: "Track 1", artist: "Artist 1", uri: "spotify:track:1" },
-    { name: "Track 2", artist: "Artist 2", uri: "spotify:track:2" },
+    {
+      name: "Track 1",
+      artist: "Artist 1",
+      uri: "spotify:track:1",
+      album: "Greatest Hits 100",
+    },
+    {
+      name: "Track 2",
+      artist: "Artist 2",
+      uri: "spotify:track:2",
+      album: "Greatest Hits of 2024",
+    },
   ]);
   // Extract URI from playlistTracks state object
   const getTrackUris = () => {
@@ -43,11 +54,26 @@ function App() {
   const savePlaylist = () => {
     const uris = getTrackUris();
     console.log("Saving these URIs to Spotify:", uris);
-
     // Reset State of playlistTracks to be an Empty Array
     setPlaylistTracks([]);
+    setIsPlaylistSaved(true); // Mark playlist as saved
+    return `Custom Playlist Saved Successfully`;
   };
 
+  const handleCreateNewPlaylist = () => {
+    setIsPlaylistSaved(false);
+    setPlaylistTracks([]);
+    setPlaylistName("");
+    setSavedPlaylistName("New Playlist");
+    setIsInitialLoad(true);
+  };
+  const resetPlaylist = () => {
+    setPlaylistTracks([]);
+    setPlaylistName("");
+    setIsInitialLoad(true);
+    setSavedPlaylistName("New Playlist");
+    setIsPlaylistSaved(false);
+  };
   const parseQuery = (query) => {
     const lowercaseQuery = query.toLowerCase();
 
@@ -103,16 +129,25 @@ function App() {
           </div>
 
           <div className="column border2 right-col">
-            <Playlist
-              savedPlaylistName={savedPlaylistName}
-              playlistName={playlistName}
-              isInitialLoad={isInitialLoad}
-              playlistTracks={playlistTracks}
-              onNameChange={updatePlaylistName}
-              saveEvent={savePlaylistName}
-              onRemove={removeTrack}
-              savePlaylist={savePlaylist}
-            />
+            {isPlaylistSaved ? (
+              <div>
+                <h3>Your playlist has been saved!</h3>
+                <p>Would you like to create another playlist?</p>
+                <button onClick={resetPlaylist}>Create New Playlist</button>
+              </div>
+            ) : (
+              <Playlist
+                savedPlaylistName={savedPlaylistName}
+                playlistName={playlistName}
+                isInitialLoad={isInitialLoad}
+                playlistTracks={playlistTracks}
+                onNameChange={updatePlaylistName}
+                saveEvent={savePlaylistName}
+                onRemove={removeTrack}
+                savePlaylist={savePlaylist}
+                onCreateNewPlaylist={handleCreateNewPlaylist}
+              />
+            )}
           </div>
         </div>
       </div>

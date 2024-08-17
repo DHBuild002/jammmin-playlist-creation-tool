@@ -3,12 +3,13 @@ import React from "react";
 import "./styles/Track.css";
 
 const Track = ({ track, onAdd, onRemove, isRemoval }) => {
-  const { name, album, artists } = track;
-  const albumName = album?.name;
-  const artistName = artists?.[0]?.name;
+  // Spotify API Specific Variables
+  // const { album, artists } = track;
+  const { name, artist, album } = track;
 
-  console.log(track);
-  console.log(name);
+  // Spotify API specific variables
+  // const albumName = album?.name;
+  // const artistName = artists?.[0]?.name;
 
   if (!track) {
     return null; // or render a fallback UI
@@ -43,8 +44,12 @@ const Track = ({ track, onAdd, onRemove, isRemoval }) => {
           <div className="track-info">
             <h2>{name}</h2>
             <p>
-              {artistName} | {albumName}
+              {artist} | {album}
             </p>
+            {/* Code block for Spotify API */}
+            {/* <p>
+              {artist} | {album}
+            </p> */}
             {renderAction()}
           </div>
         </div>
