@@ -13,6 +13,7 @@ const Playlist = ({
   savedPlaylistName,
   onRemove,
   isInitialLoad,
+  savePlaylist,
 }) => {
   // Handle initial state class for save playlist name:
   const savedNameClass = isInitialLoad ? "initial-state-input" : "";
@@ -62,6 +63,8 @@ const Playlist = ({
       </div>
       {/* <h2>TrackList</h2> */}
       <TrackList tracks={playlistTracks} onRemove={onRemove} />
+
+      <button onClick={savePlaylist}>Save your Playlist</button>
     </>
   );
 };

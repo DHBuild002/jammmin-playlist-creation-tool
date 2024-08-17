@@ -27,11 +27,26 @@ function App() {
     },
   ]);
   const [playlistName, setPlaylistName] = useState("");
-  const [playlistTracks, setPlaylistTracks] = useState([]);
   // Track pageload state for Header Text
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [savedPlaylistName, setSavedPlaylistName] = useState("New Playlist");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults] = useState([]);
+
+  const [playlistTracks, setPlaylistTracks] = useState([
+    { name: "Track 1", artist: "Artist 1", uri: "spotify:track:1" },
+    { name: "Track 2", artist: "Artist 2", uri: "spotify:track:2" },
+  ]);
+  // Extract URI from playlistTracks state object
+  const getTrackUris = () => {
+    return playlistTracks.map((track) => track.uri);
+  };
+  const savePlaylist = () => {
+    const uris = getTrackUris();
+    console.log("Saving these URIs to Spotify:", uris);
+
+    // Reset State of playlistTracks to be an Empty Array
+    setPlaylistTracks([]);
+  };
 
   const parseQuery = (query) => {
     const lowercaseQuery = query.toLowerCase();
@@ -96,6 +111,7 @@ function App() {
               onNameChange={updatePlaylistName}
               saveEvent={savePlaylistName}
               onRemove={removeTrack}
+              savePlaylist={savePlaylist}
             />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./styles/Search.css";
-import Track from "./Track";
+import TrackList from "./TrackList";
 
 const Search = ({ onSearch, onAdd }) => {
   const [query, setQuery] = useState("");
@@ -13,7 +13,7 @@ const Search = ({ onSearch, onAdd }) => {
   };
 
   const handleSearch = async () => {
-    // Fixed Dataset manually entered as an array of tracks in the app.js file for offline testing:
+    // Manual dataset in app.js file for offline testing:
     // onSearch(query).then((results) => {
     //   setSearchResults(results);
     // });
@@ -28,9 +28,12 @@ const Search = ({ onSearch, onAdd }) => {
         : [];
       if (Array.isArray(returnedTracks)) {
         setSearchResults(returnedTracks); // Only set state if it's an array
+
         returnedTracks.forEach((track) => {
           if (track.artists && Array.isArray(track.artists)) {
             console.log("Artist name:", track.artists[0].name);
+            console.log("Track Name:", track.name);
+            console.log("Album Name:", track.album[0].name);
           } else {
             console.error("No artists found for track:", track.name);
           }
@@ -77,23 +80,27 @@ const Search = ({ onSearch, onAdd }) => {
         <button onClick={handleSearch}>Find Tracks</button>
       </div>
       <div className="track-list">
-        {searchResults.length > 0 ? (
+        {/* {searchResults.length > 0 ? (
           searchResults.map((result) => (
-            <Track
-              key={result.id}
-              track={result.name}
-              artist={
-                result.artists && result.artists[0]
-                  ? result.artists[0].name
-                  : "Unknown Artist"
-              }
-              album={result.album.name}
-              onAdd={handleAdd}
-            />
-          ))
-        ) : (
-          <p>No results found</p>
-        )}
+            // <Track
+            //   key={result.id}
+            //   track={track}
+            //   artist={
+            //     result.artists && result.artists[0]
+            //       ? result.artists[0].name
+            //       : "Unknown Artist"
+            //   }
+            //   album={result.album.name}
+            //   onAdd={handleAdd}
+            //   isRemoval={false}
+        //   ))
+        // ) : (
+        //   <p>No results found</p>
+        // )}
+        // />
+        // */}
+
+        <TrackList tracks={searchResults} onAdd={handleAdd} />
       </div>
     </>
   );
