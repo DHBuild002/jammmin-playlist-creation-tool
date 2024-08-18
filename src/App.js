@@ -33,20 +33,30 @@ function App() {
   const [searchResults] = useState([]);
   const [isPlaylistSaved, setIsPlaylistSaved] = useState(false); // New state
 
-  const [playlistTracks, setPlaylistTracks] = useState([
-    {
-      name: "Track 1",
-      artist: "Artist 1",
-      uri: "spotify:track:1",
-      album: "Greatest Hits 100",
-    },
-    {
-      name: "Track 2",
-      artist: "Artist 2",
-      uri: "spotify:track:2",
-      album: "Greatest Hits of 2024",
-    },
-  ]);
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  // const [testPlaylistTracks, setTestPlaylistTracks] = useState([
+  //   {
+  //     name: "Track 1",
+  //     artist: {
+  //       name: "Artist 1",
+  //     },
+  //     uri: "spotify:track:1",
+  //     album: {
+  //       name: "Greatest Hits 100",
+  //     },
+  //   },
+  //   {
+  //     name: "Track 2",
+  //     artist: {
+  //       name: "Artist 2",
+  //     },
+
+  //     uri: "spotify:track:2",
+  //     album: {
+  //       name: "Greatest Hits of 2024",
+  //     },
+  //   },
+  // ]);
   // Extract URI from playlistTracks state object
   const getTrackUris = () => {
     return playlistTracks.map((track) => track.uri);

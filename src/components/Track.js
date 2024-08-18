@@ -5,11 +5,14 @@ import "./styles/Track.css";
 const Track = ({ track, onAdd, onRemove, isRemoval }) => {
   // Spotify API Specific Variables
   const { album, artists, name } = track;
-  // const { name, artist, album } = track;
 
   // Spotify API specific variables
-  const albumName = album?.name;
-  const artistName = artists?.[0]?.name;
+  const albumName = album?.name || "Album not found";
+  const artistName = artists?.[0]?.name || "Artist not found";
+
+  // Test Data
+  // const testAlbum = album?.name;
+  // const testArtist = artist?.name;
 
   if (!track) {
     return null; // or render a fallback UI
@@ -45,6 +48,7 @@ const Track = ({ track, onAdd, onRemove, isRemoval }) => {
             <h2>{name}</h2>
             <p>
               {artistName} | {albumName}
+              {/* {testArtist} | {testAlbum} */}
             </p>
             {renderAction()}
           </div>
