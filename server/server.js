@@ -12,6 +12,10 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:3000/callback";
 
+// Verify the environment variables are loaded
+console.log("Client ID:", CLIENT_ID); // Should print your Spotify client ID
+console.log("Client Secret:", CLIENT_SECRET); // Should print your Spotify client secret
+
 const getAccessToken = async () => {
   const token_url = "https://accounts.spotify.com/api/token";
   const response = await axios.post(
@@ -53,6 +57,19 @@ app.get("/search", async (req, res) => {
     res.status(500).send("Error performing search");
   }
 });
+// Login Path
+app.get("/login", (req, res) => {
+  const scope = "user-library-modify user-read-private";
+  const redirectUri = "http://localhost:3000/callback";
+  const clientId = process.env.CLIENT_ID;
+
+  const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(
+    scope
+  )}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+
+  res.redirect(authUrl);
+});
+
 // user authentication
 app.get("/callback", async (req, res) => {
   const code = req.query.code || null;

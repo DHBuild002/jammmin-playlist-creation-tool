@@ -1,9 +1,10 @@
 import React from "react";
 import "./styles/AuthButton.css";
+require("dotenv").config({ path: "./variables.env" });
 
 const AuthButton = () => {
   // Your Spotify application credentials
-  const CLIENT_ID = "YOUR_SPOTIFY_CLIENT_ID";
+  const CLIENT_ID = process.env.CLIENT_ID;
   const REDIRECT_URI = "http://localhost:3000/callback"; // Ensure this matches the Redirect URI in your Spotify dashboard
   const SCOPES = "user-library-modify user-read-private"; // Define the scopes you need
 
