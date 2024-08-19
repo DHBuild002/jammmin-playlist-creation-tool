@@ -7,7 +7,7 @@ const SpotifyCallback = ({ onAccessToken }) => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    const code = query.get("code");
+    const code = query.get("code"); // Get the Authentication Code from the returned spotify URL, after successful login
     const error = query.get("error");
 
     if (error) {

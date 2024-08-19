@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles/AuthButton.css";
 
 const AuthButton = () => {
   // Your Spotify application credentials
@@ -18,7 +19,9 @@ const AuthButton = () => {
   };
   return (
     <div>
-      <button onClick={handleLogin}>Login to begin creating playlists</button>
+      <button className="loginBtn" onClick={handleLogin}>
+        Login to begin creating playlists
+      </button>
     </div>
   );
 };

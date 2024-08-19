@@ -3,6 +3,7 @@ import "./App.css";
 import Playlist from "./components/Playlist";
 import TrackList from "./components/TrackList";
 import Search from "./components/Search";
+import AuthButton from "./components/AuthButton";
 
 function App() {
   // Set the initial state of tracks
@@ -128,6 +129,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h2>Jammmin</h2>
+        <AuthButton />
       </header>
       <div className="container">
         <div className="row border1">
