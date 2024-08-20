@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./App.css";
-import Playlist from "./components/Playlist";
 import TrackList from "./components/TrackList";
+import Playlist from "./components/Playlist";
 import Search from "./components/Search";
 import AuthButton from "./components/AuthButton";
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const accessToken = queryParams.get("access_token");
+    const refreshToken = queryParams.get("refresh_token");
+    const expiresIn = queryParams.get("expires_in");
+
+    if (accessToken && refreshToken && expiresIn) {
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", refreshToken);
+      localStorage.setItem("expires_in", expiresIn);
+
+      // Redirect or update the UI accordingly
+      console.log("Tokens stored and ready to use");
+    }
+  }, [location.search]);
+
   // Set the initial state of tracks
   const [tracks] = useState([
     {
