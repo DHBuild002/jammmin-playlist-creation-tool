@@ -11,7 +11,7 @@ app.use(cors());
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:3000/callback";
-
+const SCOPES = "user-library-modify user-read-private"; // Define the scopes you need
 // Verify the environment variables are loaded
 console.log("Client ID:", CLIENT_ID); // Should print your Spotify client ID
 console.log("Client Secret:", CLIENT_SECRET); // Should print your Spotify client secret
@@ -59,15 +59,14 @@ app.get("/search", async (req, res) => {
 });
 // Login Path
 app.get("/login", (req, res) => {
-  const scope = "user-library-modify user-read-private";
-  const redirectUri = "http://localhost:3000/callback";
-  const clientId = process.env.CLIENT_ID;
+  const authUrl =
+    `https://accounts.spotify.com/authorize?` +
+    `response_type=code&` +
+    `client_id=${CLIENT_ID}&` +
+    `scope=${encodeURIComponent(SCOPES)}&` +
+    `redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
 
-  const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(
-    scope
-  )}&redirect_uri=${encodeURIComponent(redirectUri)}`;
-
-  res.redirect(authUrl);
+  res.redirect(authUrl); // Redirect the user to Spotify's authorization page
 });
 
 // user authentication
