@@ -1,29 +1,93 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import TrackList from "./components/TrackList";
 import Playlist from "./components/Playlist";
 import Search from "./components/Search";
 import AuthButton from "./components/AuthButton";
+import UserProfile from "./components/UserProfile";
+import axios from "axios";
+import SpotifyCallback from "./components/SpotifyCallback";
 
-function App() {
-  const location = useLocation();
+// Help function to get cookie by name
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+  return null;
+};
+
+export default function App() {
+  const [accessToken, setAccessToken] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
+  const navigate = useNavigate();
+
+  const fetchUserProfile = async (token) => {
+    try {
+      const response = await axios.get("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("User Profile Fetched:", response.data); // Debug log
+      setUserProfile(response.data);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+  useEffect(() => {
+    if (userProfile) {
+      navigate("/");
+    }
+  }, [userProfile, navigate]);
+
+  const handleAccessToken = (access_token, refresh_token, expires_in) => {
+    setAccessToken(access_token); // Set access token in state
+    fetchUserProfile(access_token); // Fetch user profile
+    console.log("Access Token Set:", access_token); // Debug log
+  };
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const accessToken = queryParams.get("access_token");
-    const refreshToken = queryParams.get("refresh_token");
-    const expiresIn = queryParams.get("expires_in");
-
-    if (accessToken && refreshToken && expiresIn) {
-      localStorage.setItem("access_token", accessToken);
-      localStorage.setItem("refresh_token", refreshToken);
-      localStorage.setItem("expires_in", expiresIn);
-
-      // Redirect or update the UI accordingly
-      console.log("Tokens stored and ready to use");
+    const tokenFromStorage = localStorage.getItem("access_token");
+    if (tokenFromStorage) {
+      setAccessToken(tokenFromStorage);
+      fetchUserProfile(tokenFromStorage); // Fetch profile if token exists
     }
-  }, [location.search]);
+  }, []);
+
+  // Debugging Tools Adds to above
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const code = query.get("code");
+
+    if (code && !accessToken) {
+      // Exchange the code for an access token
+      axios
+        .post("http://localhost:3001/callback", { code }) // Update to backend's port
+        .then((response) => {
+          const { access_token } = response.data;
+          setAccessToken(access_token);
+          fetchUserProfile(access_token);
+          // // After handling, clear the URL query and redirect to home
+        })
+        .catch((error) => {
+          console.error("Error exchanging code for token:", error);
+        });
+    } else {
+      const tokenFromCookie = getCookie("access_token");
+      if (tokenFromCookie) {
+        setAccessToken(tokenFromCookie);
+        fetchUserProfile(tokenFromCookie);
+      }
+    }
+  }, [accessToken, navigate]);
+
+  // Function to handle logout
+  const handleLogout = () => {
+    setAccessToken(null);
+    setUserProfile(null);
+    navigate("/"); // Redirect to home after logout
+  };
 
   // Set the initial state of tracks
   const [tracks] = useState([
@@ -54,29 +118,7 @@ function App() {
   const [isPlaylistSaved, setIsPlaylistSaved] = useState(false); // New state
 
   const [playlistTracks, setPlaylistTracks] = useState([]);
-  // const [testPlaylistTracks, setTestPlaylistTracks] = useState([
-  //   {
-  //     name: "Track 1",
-  //     artist: {
-  //       name: "Artist 1",
-  //     },
-  //     uri: "spotify:track:1",
-  //     album: {
-  //       name: "Greatest Hits 100",
-  //     },
-  //   },
-  //   {
-  //     name: "Track 2",
-  //     artist: {
-  //       name: "Artist 2",
-  //     },
 
-  //     uri: "spotify:track:2",
-  //     album: {
-  //       name: "Greatest Hits of 2024",
-  //     },
-  //   },
-  // ]);
   // Extract URI from playlistTracks state object
   const getTrackUris = () => {
     return playlistTracks.map((track) => track.uri);
@@ -148,8 +190,25 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h2>Jammmin</h2>
-        <AuthButton />
       </header>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            userProfile ? (
+              <UserProfile profile={userProfile} onLogout={handleLogout} />
+            ) : (
+              <AuthButton />
+            )
+          }
+        />
+
+        <Route
+          path="/callback"
+          element={<SpotifyCallback onAccessToken={handleAccessToken} />}
+        />
+      </Routes>
+
       <div className="container">
         <div className="row border1">
           <div className="column left-col">
@@ -185,5 +244,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

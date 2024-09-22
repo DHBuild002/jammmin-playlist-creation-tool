@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-dom-router";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SpotifyCallback = ({ onAccessToken }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const expires_in = useState();
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -15,32 +17,35 @@ const SpotifyCallback = ({ onAccessToken }) => {
       return;
     }
     if (code) {
+    const interval = setInterval(() => {
       axios
-        .post(
-          "https://accounts.spotify.com/api/token",
-          new URLSearchParams({
-            grant_type: "authorization_code",
-            code: code,
-            redirect_uri: "http://localhost:3000/callback",
-            client_id: process.env.client_id,
-            client_secret: process.env.client_secret,
-          }).toString(),
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
-        )
+        .post(`http://localhost:3001/callback`, { code })
         .then((response) => {
           const { access_token, refresh_token, expires_in } = response.data;
-          onAccessToken(access_token, refresh_token, expires_in);
+          console.log(response.data);
+
+          if (onAccessToken) {
+            console.log("Received Access Token in Callback:", access_token);
+
+            onAccessToken(access_token, refresh_token, expires_in);
+
+            navigate("/");
+          }
+
+          // Store tokens in localStorage (or state)
+          localStorage.setItem("access_token", access_token);
+          localStorage.setItem("refresh_token", refresh_token);
+          localStorage.setItem("expires_in", expires_in);
+
+          // Redirect to homepage after successful token retrieval
         })
         .catch((error) => {
-          console.error("Error Exchanging code for token: ", error);
+          console.error("Error exchanging code for token: ", error);
         });
-    }
-  }, [location, onAccessToken]);
-  return <div>Redirecting...</div>;
-};
+    }, (expires_in - 60) * 1000)
+    return () => clearInterval(interval)
+  }, [location, navigate, onAccessToken]});
+}
+
 
 export default SpotifyCallback;

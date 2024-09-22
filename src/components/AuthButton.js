@@ -10,7 +10,7 @@ const AuthButton = () => {
   return (
     <div>
       <button className="loginBtn" onClick={handleLogin}>
-        Login to begin creating playlists
+        Login to Spotify
       </button>
     </div>
   );

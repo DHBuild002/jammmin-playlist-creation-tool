@@ -1,17 +1,34 @@
-require("dotenv").config({ path: "./server/variables.env" });
+const dotenv = require("dotenv");
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const qs = require("qs");
 const querystring = require("querystring");
-
 const app = express();
-app.use(cors());
+
+
+
+// Persist Token Data
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+dotenv.config({ path: "./server/variables.env" });
+// app.use(cors());
+// More Specific CORS Proxy config
+const corsOptions = {
+  origin: "http://localhost:3000", // Adjust to match your React app's origin
+  methods: "GET,POST",
+};
+
+app.use(cors(corsOptions));
+app.use(express.json()); // Needed to parse JSON body data from POST requests
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = "http://localhost:3000/callback";
-const SCOPES = "user-library-modify user-read-private"; // Define the scopes you need
+const REDIRECT_URI = "http://localhost:3001/callback";
+
+// axios.defaults.baseURL = "http://localhost:3001";
+// const SCOPES = "user-library-modify user-read-private"; // Define the scopes you need
 // Verify the environment variables are loaded
 console.log("Client ID:", CLIENT_ID); // Should print your Spotify client ID
 console.log("Client Secret:", CLIENT_SECRET); // Should print your Spotify client secret
@@ -32,8 +49,17 @@ const getAccessToken = async () => {
       },
     }
   );
+  console.log(response.data.access_token);
   return response.data.access_token;
 };
+app.get("/", (req, res) => {
+  const access_token = req.cookies.access_token;
+  if (!access_token) {
+    return res.send("No Access Token found. Please login again.");
+  }
+  console.log("Redirecting to Homepage... /");
+  res.send("Welcome: " + access_token);
+});
 
 app.get("/search", async (req, res) => {
   const query = req.query.query;
@@ -63,8 +89,8 @@ app.get("/login", (req, res) => {
     `https://accounts.spotify.com/authorize?` +
     `response_type=code&` +
     `client_id=${CLIENT_ID}&` +
-    `scope=${encodeURIComponent(SCOPES)}&` +
-    `redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+    `scope=playlist-modify-public&` +
+    `redirect_uri=${REDIRECT_URI}`;
 
   res.redirect(authUrl); // Redirect the user to Spotify's authorization page
 });
@@ -73,7 +99,10 @@ app.get("/login", (req, res) => {
 app.get("/callback", async (req, res) => {
   const code = req.query.code || null;
   const error = req.query.error || null;
+
+  console.log("Callback endpoint hit with code:", req.query.code);
   if (error) {
+    console.error("Issue with /callback: ", error);
     return res.send(`Callback Error: ${error}`);
   }
   if (!code) {
@@ -81,7 +110,7 @@ app.get("/callback", async (req, res) => {
   }
   try {
     const tokenResponse = await axios.post(
-      "https://accounts.spotify.com",
+      "https://accounts.spotify.com/api/token",
       querystring.stringify({
         grant_type: "authorization_code",
         code: code,
@@ -91,21 +120,37 @@ app.get("/callback", async (req, res) => {
       }),
       {
         headers: {
-          "Content-Type": "application/x-www-form-url-encoded",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       }
     );
     const { access_token, refresh_token, expires_in } = tokenResponse.data;
 
-    res.redirect(
-      `/?access_token=${access_token}&refresh_token=${refresh_token}&expires_in=${expires_in}`
+    res.cookie("access_token", access_token, { httpOnly: true, secure: true });
+    res.cookie("refresh_token", refresh_token, { httpOnly: true });
+    const expirationTime = Date.now() + expires_in * 1000; // Calculate expiration
+    res.cookie("expires_in", expirationTime, { httpOnly: true });
+
+    // res.json({ access_token, refresh_token, expires_in });
+    res.redirect("http://localhost:3001/callback?code=" + code);
+    console.log(
+      "Response from accounts.spotify.com: " +
+        " " +
+        "Access Token: " +
+        access_token +
+        " " +
+        " Refresh Token: " +
+        refresh_token
     );
   } catch (error) {
-    console.error("Error getting tokens:", error);
+    console.error(
+      "Error getting tokens:",
+      error.response ? error.response.data : error
+    );
     res.send("Error getting tokens");
   }
 });
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
