@@ -25,4 +25,4 @@ yarn-error.log*
 jammming-project-solution-v18
 
 # Env Variables
-.env
+*.env
