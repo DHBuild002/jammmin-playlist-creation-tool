@@ -1,0 +1,63 @@
+.route-container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center; /* Center the child horizontally */
+  align-items: center; /* Center the child vertically (if there's enough height) */
+}
+
+.spotify-container {
+  flex-direction: column;
+  background-color: rgb(215, 215, 215);
+  display: flex;
+  flex-grow: 1;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  padding: 20px; /* Add padding for spacing inside the box */
+  max-width:90%; /* Optionally, control the maximum width of the child container */
+  overflow-wrap: break-word; /* Ensures text inside the container wraps */
+  box-sizing: border-box; /* Ensure padding doesn't affect the container's width */
+  border-radius: 5px;
+  margin: 20px;
+}
+.sub-text {
+  font-size: 25px;
+  margin: 0;
+}
+.token{
+  margin: 25px;
+  font-size: 12px
+}
+.spotify-container p {
+  max-width: 100%;
+}
+#login-btn {
+    margin: 2% auto;
+    padding: 25px;
+}
+.spotify-btn {
+    background-color: #1DB954; /* Spotify's signature green */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 500px; /* Highly rounded corners */
+    padding: 12px 32px; /* Padding for button size */
+    font-size: 16px; /* Font size */
+    font-weight: bold; /* Bold font */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1.5px; /* Spacing between letters */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .spotify-btn:hover {
+    background-color: #1ed760; /* Slightly lighter green on hover */
+  }
+  
+  .spotify-btn:active {
+    background-color: #18ac4d; /* Darker green when button is pressed */
+  }
+  
+  .spotify-btn:focus {
+    outline: none; /* Removes the focus outline */
+    box-shadow: 0 0 0 4px rgba(29, 185, 84, 0.3); /* Green shadow when focused */
+  }
+  

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import "./components/styles/Spotify.css";
 import Playlist from "./components/Playlist";
 import TrackList from "./components/TrackList";
 import Search from "./components/Search";
@@ -9,51 +10,53 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import { loginToSpotify, getTokenFromUrl } from "./components/Spotify.js";
+import { loginToSpotify, getTokenFromUrl } from "./Spotify.js";
+
+function HomePage() {
+  const [token, setToken] = useState(localStorage.getItem("spotifyToken"));
+
+  function logout() {
+    localStorage.removeItem("spotifyToken"); // Clear token from localStorage
+    window.location.href = "/"; // Redirect to homepage after logging out
+  }
+  return token ? (
+    <div className="spotify-container">
+      <h1>Welcome!</h1>
+      <p className="sub-text">You logged in with token:</p>
+      <p className="token">{token}</p>
+      <button className="btn spotify-btn" onClick={logout}>
+        Log Out
+      </button>
+    </div>
+  ) : (
+    <div className="spotify-container">
+      <button
+        className="btn spotify-btn"
+        id="login-btn"
+        onClick={loginToSpotify}
+      >
+        Login to Spotify
+      </button>
+    </div>
+  );
+}
+// Callback component that retrieves the token and stores it in localStorage
+function Callback() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = getTokenFromUrl();
+    if (accessToken) {
+      localStorage.setItem("spotifyToken", accessToken);
+      navigate("/");
+    }
+  }, [navigate]);
+
+  return null; // You can return a loading spinner here if desired
+}
 
 function App() {
   //Login Logic
-  function HomePage() {
-    const [token, setToken] = useState(localStorage.getItem("spotifyToken"));
-
-    function logout() {
-      localStorage.removeItem("spotifyToken"); // Clear token from localStorage
-      window.location.href = "/"; // Redirect to homepage after logging out
-    }
-    return token ? (
-      <div className="container">
-        <h1>Welcome!</h1>
-        <p className="sub-text">
-          You logged in with token:
-          <p className="token">{token}</p>
-        </p>
-        <button className="btn" onClick={logout}>
-          Log Out
-        </button>
-      </div>
-    ) : (
-      <div className="container">
-        <button className="btn" id="login-btn" onClick={loginToSpotify}>
-          Login to Spotify
-        </button>
-      </div>
-    );
-  }
-  // Callback component that retrieves the token and stores it in localStorage
-  function Callback() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-      const accessToken = getTokenFromUrl();
-      if (accessToken) {
-        localStorage.setItem("spotifyToken", accessToken);
-        navigate("/");
-      }
-    }, [navigate]);
-
-    return null; // You can return a loading spinner here if desired
-  }
-
   // Set the initial state of tracks
   const [tracks] = useState([
     {
@@ -127,14 +130,16 @@ function App() {
       <header className="App-header">
         <h2>Jammmin</h2>
       </header>
+      <div className="route-container">
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/callback" element={<Callback />} />
+          </Routes>
+        </Router>
+      </div>
       <div className="container">
         <div className="row border1">
-          <Router>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/callback" element={<Callback />} />
-            </Routes>
-          </Router>
           <div className="column left-col">
             {/* Search Module */}
             <Search onSearch={parseQuery} onAdd={addTrack} />
