@@ -127,9 +127,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h2>Jammmin</h2>
-      </header>
+      <header className="purple-strip"></header>
       <div className="route-container">
         <Router>
           <Routes>
