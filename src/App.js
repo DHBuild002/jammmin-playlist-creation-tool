@@ -135,6 +135,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/callback" element={<Callback />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </Router>
       </div>

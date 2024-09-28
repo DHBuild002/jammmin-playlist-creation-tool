@@ -14,3 +14,5 @@ export const getTokenFromUrl = () => {
       return acc;
     }, {}).access_token;
 };
+const token = getTokenFromUrl();
+console.log("Extracted Token:", token);
