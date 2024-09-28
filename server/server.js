@@ -1,4 +1,3 @@
-require("dotenv").config({ path: "./server/variables.env" });
 const express = require("express");
 const axios = require("axios");
 
