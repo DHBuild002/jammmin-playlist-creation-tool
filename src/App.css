@@ -14,7 +14,8 @@
 }
 
 .purple-strip {
-  background-color:  rgb(167, 35, 211);
+  background: rgb(109,65,247);
+background: linear-gradient(262deg, rgba(109,65,247,1) 21%, rgba(170,57,255,1) 74%);
   height: 10px;
 }
 

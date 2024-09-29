@@ -58,17 +58,19 @@ const Search = ({ onAdd }) => {
   };
 
   return (
-    <div>
-      <h1>Spotify Search</h1>
-      <input
-        type="text"
-        placeholder="Search for tracks, artists, albums..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button type="submit" onClick={handleSearch}>
-        Search
-      </button>
+    <div className="search">
+      <h1 className="search-h1">Spotify Search</h1>
+      <div className="search-controls">
+        <input
+          type="text"
+          placeholder="Search for tracks, artists, albums..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button type="submit" onClick={handleSearch}>
+          Search
+        </button>
+      </div>
 
       <div>
         {results.length > 0 && (

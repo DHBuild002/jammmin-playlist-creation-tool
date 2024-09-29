@@ -3,12 +3,22 @@
     display: flex;
     align-items: center;
     padding: 0;
+    flex-direction: column;
+}
+.search-controls{
+  flex-direction: row;
+  height: 100%;
 }
 .search input {
     flex: 1;
-    padding: 0.5rem;
-    margin-right: 0rem;
+    margin-right: .6rem;
     margin-left: 0rem;
+    border: none;
+    border-style: none;
+    padding: 10px;
+    border-radius: 8px;
+    border-color: purple;
+    border-width: 1px;
   }
   .search button {
     padding: 0.5rem 1rem;
@@ -18,4 +28,10 @@
     text-decoration: none;
     background-color: purple;
     color: white;
+    margin: 1% auto;
+    padding: 10px;
   }
+.search-h1 {
+  font-size: 20px;
+  color: purple;
+}
