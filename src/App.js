@@ -13,11 +13,11 @@ import {
 } from "react-router-dom";
 import { loginToSpotify, getTokenFromUrl } from "./Spotify.js";
 
-function HomePage() {
-  const [token, setToken] = useState(localStorage.getItem("spotifyToken"));
-
+function HomePage({ token, setToken }) {
+  console.log(token);
   function logout() {
-    localStorage.removeItem("spotifyToken"); // Clear token from localStorage
+    localStorage.removeItem("spotify_access_token"); // Clear token from localStorage
+    setToken(null);
     window.location.href = "/"; // Redirect to homepage after logging out
   }
   return token ? (
@@ -42,23 +42,33 @@ function HomePage() {
   );
 }
 // Callback component that retrieves the token and stores it in localStorage
-function Callback() {
+function Callback({ setToken }) {
   const navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = getTokenFromUrl();
     if (accessToken) {
-      localStorage.setItem("spotifyToken", accessToken);
+      localStorage.setItem("spotify_access_token", accessToken);
+      setToken(accessToken); // Set the token state
       navigate("/");
     }
-  }, [navigate]);
+  }, [navigate, setToken]);
 
   return null; // You can return a loading spinner here if desired
 }
 
 function App() {
-  //Login Logic
-  const token = getTokenFromUrl();
+  // Login State
+  const [token, setToken] = useState(
+    localStorage.getItem("spotify_access_token")
+  );
+
+  useEffect(() => {
+    const tokenFromLocalStorage = localStorage.getItem("spotify_access_token");
+    if (tokenFromLocalStorage) {
+      setToken(tokenFromLocalStorage); // Set the token state if it exists
+    }
+  }, []);
 
   // Set the initial state of tracks
   const [tracks] = useState([
@@ -89,6 +99,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   const parseQuery = (query) => {
+    console.log("Track before filtering: ", tracks);
     const lowercaseQuery = query.toLowerCase();
 
     const searchResults = tracks.filter((track) => {
@@ -102,7 +113,8 @@ function App() {
         lowercaseAlbum.includes(lowercaseQuery)
       );
     });
-    return Promise.resolve(searchResults);
+    setSearchResults(searchResults);
+    console.log("Search Results:", searchResults); // Add this to check
   };
   const addTrack = (track) => {
     setPlaylistTracks((prevTracks) => {
@@ -136,8 +148,14 @@ function App() {
       <div className="route-container">
         <Router>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/callback" element={<Callback />} />
+            <Route
+              path="/"
+              element={<HomePage token={token} setToken={setToken} />}
+            />
+            <Route
+              path="/callback"
+              element={<Callback setToken={setToken} />}
+            />
             <Route path="/search" element={<Search />} />
           </Routes>
         </Router>

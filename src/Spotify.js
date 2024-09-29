@@ -2,6 +2,7 @@ const authUrl = `https://accounts.spotify.com/authorize?client_id=${process.env.
 
 export const loginToSpotify = () => {
   window.location.href = authUrl;
+  
 };
 
 export const getTokenFromUrl = () => {
