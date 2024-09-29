@@ -5,12 +5,19 @@ export const loginToSpotify = () => {
 };
 
 export const getTokenFromUrl = () => {
+  // return window.location.hash
+  //   .substring(1)
+  //   .split("&")
+  //   .reduce((acc, item) => {
+  //     let parts = item.split("=");
+  //     acc[parts[0]] = decodeURIComponent(parts[1]);
+  //     return acc;
+  //   }, {}).access_token;
+  
+  // Writing the above without using a key for the access_token:
   return window.location.hash
     .substring(1)
     .split("&")
-    .reduce((acc, item) => {
-      let parts = item.split("=");
-      acc[parts[0]] = decodeURIComponent(parts[1]);
-      return acc;
-    }, {}).access_token;
+    .map((item) => item.split("="))
+    .find((parts) => parts[0] === "access_token")[1];
 };
