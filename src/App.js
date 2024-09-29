@@ -3,7 +3,8 @@ import "./App.css";
 import "./components/styles/Spotify.css";
 import Playlist from "./components/Playlist";
 import TrackList from "./components/TrackList";
-import Search from "./components/Search";
+import Search from "./components/Search.js";
+import "./components/styles/Search.css";
 import {
   BrowserRouter as Router,
   Routes,
@@ -57,6 +58,8 @@ function Callback() {
 
 function App() {
   //Login Logic
+  const token = getTokenFromUrl();
+
   // Set the initial state of tracks
   const [tracks] = useState([
     {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./styles/Search.css";
 import Track from "./Track";
 
 const Search = ({ onAdd }) => {
