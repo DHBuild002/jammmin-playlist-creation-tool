@@ -52,10 +52,10 @@ const Search = ({ onAdd }) => {
       // Optionally handle token expiration or errors here
     }
   };
-  const handleAdd = (track) => {
-    console.log("Track added:", track);
-    onAdd(track);
-  };
+  // const handleAdd = (track) => {
+  //   console.log("Track added:", track);
+  //   onAdd(track);
+  // };
 
   return (
     <div className="search">

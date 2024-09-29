@@ -30,9 +30,9 @@ const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
       <div className="trackContainer">
         <div className="track">
           <div className="track-info">
-            <h2>{track}</h2>
+            <h2>{track.name}</h2>
             <p>
-              {artist} | {album}
+              {track.artist} | {track.album}
             </p>
             {renderAction()}
           </div>
