@@ -50,6 +50,10 @@ background: linear-gradient(262deg, rgba(109,65,247,1) 21%, rgba(170,57,255,1) 7
 .border2{
   border: 0px solid blue;
 }
+.login-txt{
+  text-transform: uppercase;
+  color: purple;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -31,6 +31,7 @@ function UserAccess({ token, setToken }) {
     </div>
   ) : (
     <div className="spotify-container">
+      <h2 className="login-txt">Create a custom playlist</h2>
       <button
         className="btn spotify-btn"
         id="login-btn"
