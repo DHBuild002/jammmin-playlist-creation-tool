@@ -13,12 +13,12 @@ import {
 } from "react-router-dom";
 import { loginToSpotify, getTokenFromUrl } from "./Spotify.js";
 
-function HomePage({ token, setToken }) {
+function UserAccess({ token, setToken }) {
   console.log(token);
   function logout() {
     localStorage.removeItem("spotify_access_token"); // Clear token from localStorage
     setToken(null);
-    window.location.href = "/"; // Redirect to homepage after logging out
+    window.location.href = "/"; // Redirect to UserAccess after logging out
   }
   return token ? (
     <div className="spotify-container">
@@ -150,7 +150,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<HomePage token={token} setToken={setToken} />}
+              element={<UserAccess token={token} setToken={setToken} />}
             />
             <Route
               path="/callback"
