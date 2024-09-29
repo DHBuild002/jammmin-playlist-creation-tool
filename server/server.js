@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 require("dotenv").config({ path: "./server/variables.env" });
+=======
+>>>>>>> main
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -10,6 +13,7 @@ app.use(cors());
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
+<<<<<<< HEAD
 const getAccessToken = async () => {
   const token_url = "https://accounts.spotify.com/api/token";
   const response = await axios.post(
@@ -38,6 +42,16 @@ app.get("/search", async (req, res) => {
     const response = await axios.get(search_url, {
       headers: {
         Authorization: `Bearer ${token}`,
+=======
+app.get("/search", async (req, res) => {
+  // const newToken = getTokenFromUrl();
+  const query = req.query.query;
+  try {
+    const search_url = "https://api.spotify.com/v1/search";
+    const response = await axios.get(search_url, {
+      headers: {
+        // Authorization: `Bearer ${newToken}`,
+>>>>>>> main
       },
       params: {
         q: query,

@@ -1,101 +1,94 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./styles/Search.css";
+import React, { useState, useEffect } from "react";
 import Track from "./Track";
 
-const Search = ({ onSearch, onAdd }) => {
+const Search = ({ onAdd }) => {
   const [query, setQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [accessToken, setAccessToken] = useState("");
+  const [results, setResults] = useState([]);
+  // Fetch the access token from URL or local storage
+  useEffect(() => {
+    const token = localStorage.getItem("spotify_access_token");
+    if (token) {
+      setAccessToken(token);
+      localStorage.setItem("spotify_access_token", token);
+      console.log(token);
+      window.location.hash = ""; // Clear the token from the URL
+    }
+  }, []);
+  // const handleSearch = () => {
+  //   onSearch(query).then((results) => {
+  //     setSearchResults(results);
+  //   });
+  // const getTokenFromUrl = () => {
+  //   const hash = window.location.hash.substring(1);
+  //   const params = new URLSearchParams(hash);
+  //   return params.get("access_token");
+  // };
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!query) return;
+    console.log("Access Token:", accessToken);
+    console.log("Search Query: " + query);
 
+    const response = await fetch(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+        query
+      )}&type=track,artist,album`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      // Limit results to 3
+      const limitedResults = data.tracks.items.slice(0, 3);
+      setResults(limitedResults);
+    } else {
+      console.error("Error fetching data from Spotify API");
+      // Optionally handle token expiration or errors here
+    }
+  };
   const handleAdd = (track) => {
     console.log("Track added:", track);
     onAdd(track);
   };
 
-  const handleSearch = async () => {
-    // Fixed Dataset manually entered as an array of tracks in the app.js file for offline testing:
-    // onSearch(query).then((results) => {
-    //   setSearchResults(results);
-    // });
-    try {
-      const response = await axios.get("http://localhost:3001/search", {
-        params: {
-          query: query,
-        },
-      });
-      const returnedTracks = Array.isArray(response.data.tracks.items)
-        ? response.data.tracks.items
-        : [];
-      if (Array.isArray(returnedTracks)) {
-        setSearchResults(returnedTracks); // Only set state if it's an array
-        returnedTracks.forEach((track) => {
-          if (track.artists && Array.isArray(track.artists)) {
-            console.log("Artist name:", track.artists[0].name);
-          } else {
-            console.error("No artists found for track:", track.name);
-          }
-        });
-      } else {
-        console.error("Expected an array, but got:", typeof returnedTracks);
-      }
-      console.log("Search results:", returnedTracks); // Log for debugging
-      console.log(
-        "Type of returned data:",
-        Array.isArray(response.data.tracks.items)
-      ); // Should log 'true'
-
-      // setSearchResults(returnedTracks);
-    } catch (error) {
-      if (error.response) {
-        // The request was made, and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error("Error data:", error.response.data);
-        console.error("Error status:", error.response.status);
-        console.error("Error headers:", error.response.headers);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error("No response received:", error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error("Error setting up request:", error.message);
-      }
-      console.error("Error config:", error.config);
-    }
-  };
-
   return (
-    <>
-      <h4>Search tracks on Spotify</h4>
-      <div className="search">
-        <input
-          className="input searchBox"
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search tracks using Spotify API"
-        />
-        <button onClick={handleSearch}>Find Tracks</button>
-      </div>
-      <div className="track-list">
-        {searchResults.length > 0 ? (
-          searchResults.map((result) => (
-            <Track
-              key={result.id}
-              track={result.name}
-              artist={
-                result.artists && result.artists[0]
-                  ? result.artists[0].name
-                  : "Unknown Artist"
-              }
-              album={result.album.name}
-              onAdd={handleAdd}
-            />
-          ))
-        ) : (
-          <p>No results found</p>
+    <div>
+      <h1>Spotify Search</h1>
+      <input
+        type="text"
+        placeholder="Search for tracks, artists, albums..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <button type="submit" onClick={handleSearch}>
+        Search
+      </button>
+
+      <div>
+        {results.length > 0 && (
+          <ul>
+            {results.map((track) => (
+              <Track
+                key={track.id}
+                track={{
+                  name: track.name,
+                  artist: track.artists.map((artist) => artist.name).join(", "),
+                  album: track.album.name,
+                }}
+                onAdd={onAdd}
+                isRemoval={false} // Pass isRemoval prop if needed
+              />
+            ))}
+          </ul>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

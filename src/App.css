@@ -13,16 +13,9 @@
   }
 }
 
-.App-header {
+.purple-strip {
   background-color:  rgb(167, 35, 211);
-  min-height: 22vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  text-align: center
+  height: 10px;
 }
 
 .App-link {
