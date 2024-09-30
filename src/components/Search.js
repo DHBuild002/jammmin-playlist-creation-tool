@@ -30,26 +30,30 @@ const Search = ({ onAdd }) => {
     console.log("Access Token:", accessToken);
     console.log("Search Query: " + query);
 
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${encodeURIComponent(
-        query
-      )}&type=track,artist,album`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    try {
+      const response = await fetch(
+        `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+          query
+        )}&type=track,artist,album`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      // Limit results to 3
-      const limitedResults = data.tracks.items.slice(0, 3);
-      setResults(limitedResults);
-    } else {
-      console.error("Error fetching data from Spotify API");
-      // Optionally handle token expiration or errors here
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        // Limit results to 3
+        const limitedResults = data.tracks.items.slice(0, 3);
+        setResults(limitedResults);
+      } else {
+        console.error("Error fetching data from Spotify API");
+        // Optionally handle token expiration or errors here
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   // const handleAdd = (track) => {
@@ -77,8 +81,8 @@ const Search = ({ onAdd }) => {
           <ul>
             {results.map((track) => (
               <Track
-                key={track.id}
                 track={{
+                  key: track.id,
                   name: track.name,
                   artist: track.artists.map((artist) => artist.name).join(", "),
                   album: track.album.name,

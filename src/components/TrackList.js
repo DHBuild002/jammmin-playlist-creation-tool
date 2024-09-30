@@ -6,7 +6,7 @@ const TrackList = ({ tracks, onAdd, onRemove }) => {
   return (
     <div className="track-list">
       {tracks.map((track) => (
-        <div key={track.id} className="trackContainer">
+        <div className="trackContainer">
           <Track
             key={track.id}
             track={track}
