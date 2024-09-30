@@ -79,7 +79,7 @@ const Search = ({ onAdd }) => {
 
       <div>
         {results.length > 0 && (
-          <ul>
+          <ul className="track-list">
             {results.map((track) => (
               <Track
                 track={{

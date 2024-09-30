@@ -35,11 +35,11 @@ background: linear-gradient(262deg, rgba(109,65,247,1) 21%, rgba(170,57,255,1) 7
   justify-content: center;
   align-items: center;
   column-gap: 10px;  
-  margin-top: 10%;  
+  margin-top: 10px;  
 }
 .column {
   width: 33.33%;
-  height: 450px;
+  height: 700px;
   background: #e5b7f882;
 }
 
