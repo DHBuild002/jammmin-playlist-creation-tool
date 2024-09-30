@@ -77,7 +77,7 @@ const Search = ({ onAdd }) => {
         </button>
       </div>
 
-      <div>
+      <div className="track-list-container">
         {results.length > 0 && (
           <ul className="track-list">
             {results.map((track) => (

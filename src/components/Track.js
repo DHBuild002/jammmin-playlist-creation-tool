@@ -16,13 +16,13 @@ const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
     if (isRemoval) {
       return (
         <button className="track-action" onClick={handleRemove}>
-          Remove
+          -
         </button>
       );
     }
     return (
       <button className="track-action" onClick={handleAdd}>
-        Add
+        +
       </button>
     );
   };
@@ -31,10 +31,9 @@ const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
       <div className="trackContainer">
         <div className="track">
           <div className="track-info">
-            <h2>{track.name}</h2>
-            <p>
-              {track.artist} | {track.album}
-            </p>
+            <h2 className="track-name">{track.name}</h2>
+            <p className="track-artist">{track.artist}</p>
+            <p className="track-album">{track.album}</p>
             {renderAction()}
           </div>
         </div>

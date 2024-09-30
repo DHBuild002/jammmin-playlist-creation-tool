@@ -10,3 +10,14 @@
   .track p {
     margin: 10px;
   }
+  .track-name {
+    font-size: 16px; /* Adjust font size for track name */
+    font-weight: bold; /* Make track name bold */
+    text-decoration: none; /* Underline track name */
+}
+/* Artist and Album Name Styling */
+.track-artist, .track-album {
+  font-size: 10px; /* Smaller font size for artist and album */
+  color: #303030; /* Optional: lighter color for better readability */
+
+}

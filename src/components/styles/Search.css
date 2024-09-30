@@ -20,17 +20,6 @@
     border-color: purple;
     border-width: 1px;
   }
-  .search button {
-    padding: 0.5rem 1rem;
-    border: 1px solid #adc0ff;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    background-color: purple;
-    color: white;
-    margin: 1% auto;
-    padding: 10px;
-  }
 .search-h1 {
   font-size: 20px;
   color: rgb(230, 153, 247);

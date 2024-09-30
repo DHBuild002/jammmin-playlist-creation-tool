@@ -4,7 +4,7 @@ import "./styles/TrackList.css";
 
 const TrackList = ({ tracks, onAdd, onRemove }) => {
   return (
-    <>
+    <div className="container">
       {tracks.map((track) => (
         <div className="trackContainer">
           <Track
@@ -16,7 +16,7 @@ const TrackList = ({ tracks, onAdd, onRemove }) => {
           />
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
