@@ -71,27 +71,9 @@ function App() {
     }
   }, []);
 
-  // Set the initial state of tracks
-  const [tracks] = useState([
-    {
-      id: 1,
-      name: "Song One",
-      artist: "Artist 1",
-      album: "Album 1",
-    },
-    {
-      id: 2,
-      name: "Song Two",
-      artist: "Artist 2",
-      album: "Album 2",
-    },
-    {
-      id: 3,
-      name: "Song Three",
-      artist: "Artist 3",
-      album: "Album 3",
-    },
-  ]);
+  // // Set the initial state of tracks
+  const [tracks] = useState([]);
+  // ]);
   const [playlistName, setPlaylistName] = useState("");
   const [playlistTracks, setPlaylistTracks] = useState([]);
   // Track pageload state for Header Text
@@ -119,7 +101,7 @@ function App() {
   };
   const addTrack = (track) => {
     setPlaylistTracks((prevTracks) => {
-      if (!prevTracks.some((t) => t.id === track.id)) {
+      if (!prevTracks.some((t) => t.key === track.key)) {
         return [...prevTracks, track];
       }
       return prevTracks;

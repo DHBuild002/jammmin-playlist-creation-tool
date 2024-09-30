@@ -3,6 +3,7 @@ import React from "react";
 import "./styles/Track.css";
 
 const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
+  console.log(track);
   const handleAdd = () => {
     onAdd(track);
   };

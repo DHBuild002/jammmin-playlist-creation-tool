@@ -47,6 +47,7 @@ const Search = ({ onAdd }) => {
         console.log(data);
         // Limit results to 3
         const limitedResults = data.tracks.items.slice(0, 3);
+        console.log(limitedResults);
         setResults(limitedResults);
       } else {
         console.error("Error fetching data from Spotify API");

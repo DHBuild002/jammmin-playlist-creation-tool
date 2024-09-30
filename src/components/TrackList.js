@@ -8,9 +8,10 @@ const TrackList = ({ tracks, onAdd, onRemove }) => {
       {tracks.map((track) => (
         <div className="trackContainer">
           <Track
-            key={track.id}
+            id={track.id}
             track={track}
             onRemove={onRemove}
+            onAdd={onAdd}
             isRemoval={true}
           />
         </div>
