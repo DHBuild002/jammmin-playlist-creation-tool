@@ -159,28 +159,31 @@ function App() {
           </Routes>
         </Router>
       </div>
-      <div className="container">
-        <div className="row border1">
-          <div className="column left-col">
-            {/* Search Module */}
-            <Search onSearch={parseQuery} onAdd={addTrack} />
-            {/* Results of Search in Tracklist format */}
-            <TrackList tracks={searchResults} onAdd={addTrack} />
-          </div>
-
-          <div className="column border2 right-col">
-            <Playlist
-              savedPlaylistName={savedPlaylistName}
-              playlistName={playlistName}
-              isInitialLoad={isInitialLoad}
-              playlistTracks={playlistTracks}
-              onNameChange={updatePlaylistName}
-              saveEvent={savePlaylistName}
-              onRemove={removeTrack}
-            />
+      {token ? (
+        <div className="container playlist-creator-area">
+          <div className="row border1">
+            <div className="column left-col">
+              {/* Search Module */}
+              <Search onSearch={parseQuery} onAdd={addTrack} />
+              {/* Results of Search in Tracklist format */}
+              <TrackList tracks={searchResults} onAdd={addTrack} />
+            </div>
+            <div className="column border2 right-col">
+              <Playlist
+                savedPlaylistName={savedPlaylistName}
+                playlistName={playlistName}
+                isInitialLoad={isInitialLoad}
+                playlistTracks={playlistTracks}
+                onNameChange={updatePlaylistName}
+                saveEvent={savePlaylistName}
+                onRemove={removeTrack}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
