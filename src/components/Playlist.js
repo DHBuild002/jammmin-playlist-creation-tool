@@ -60,8 +60,11 @@ const Playlist = ({
           </div>
         )}
       </div>
-      {/* <h2>TrackList</h2> */}
-      <TrackList tracks={playlistTracks} onRemove={onRemove} />
+      <div className="customPlaylistArea">
+        {/* <h2>TrackList</h2> */}
+        <TrackList tracks={playlistTracks} onRemove={onRemove} />
+        <button>Save your Playlist</button>
+      </div>
     </>
   );
 };

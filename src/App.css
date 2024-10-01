@@ -26,6 +26,7 @@ background: linear-gradient(262deg, rgba(109,65,247,1) 21%, rgba(170,57,255,1) 7
   display: flex;
   gap: 25%;
   align-self: center;
+  flex-direction: column;
 }
 .row {
   display: flex;
