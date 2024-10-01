@@ -24,7 +24,7 @@ const Playlist = ({
   const handleNameChange = (e) => {
     onNameChange(e.target.value);
   };
-  const handleSave = () => {
+  const handleNameSave = () => {
     saveEvent(playlistName);
     setIsInputVisible(false);
   };
@@ -55,7 +55,7 @@ const Playlist = ({
               />
             </div>
             <div className="playlistTitle">
-              <button onClick={handleSave}>Save</button>
+              <button onClick={handleNameSave}>Save</button>
             </div>
           </div>
         )}
