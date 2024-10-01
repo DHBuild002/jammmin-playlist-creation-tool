@@ -4,14 +4,19 @@ import "./styles/Playlist.css";
 
 // Icon List
 import EditIcon from "@mui/icons-material/Edit";
+import {
+  createPlaylistInUserAccount,
+  addTracksToExternalCustomPlaylist,
+  getUserId,
+} from "../Spotify";
 
 const Playlist = ({
-  playlistName,
-  playlistTracks,
   onNameChange,
+  playlistName,
+  customTrackList,
   saveEvent,
   savedPlaylistName,
-  savedPlaylist,
+  setSavedPlaylist,
   onRemove,
   isInitialLoad,
 }) => {
@@ -33,7 +38,25 @@ const Playlist = ({
     setIsInputVisible(true);
   };
   const handlePlaylistSave = () => {
-    console.log(savedPlaylist);
+    const accessToken = localStorage.getItem("spotify_access_token");
+    getUserId(accessToken)
+      .then((userId) => {
+        return createPlaylistInUserAccount(userId, playlistName, accessToken);
+      })
+      .then((playlistId) => {
+        const trackURIs = customTrackList.map((track) => track.uri);
+        return addTracksToExternalCustomPlaylist(
+          playlistId,
+          trackURIs,
+          accessToken
+        );
+      })
+      .then(() => {
+        console.log("Playlist Saved Successfully");
+      })
+      .catch((error) => {
+        console.error("Error saving playlist: ", error);
+      });
   };
   const [isInputVisible, setIsInputVisible] = useState(false);
   return (
@@ -66,7 +89,7 @@ const Playlist = ({
       </div>
       <div className="customPlaylistArea">
         {/* <h2>TrackList</h2> */}
-        <TrackList tracks={playlistTracks} onRemove={onRemove} />
+        <TrackList tracks={customTrackList} onRemove={onRemove} />
         <button onClick={handlePlaylistSave}>Save your Playlist</button>
       </div>
     </>

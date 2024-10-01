@@ -74,8 +74,7 @@ function App() {
   // // Set the initial state of tracks
   const [tracks] = useState([]);
   // ]);
-  const [playlistName, setPlaylistName] = useState("");
-  const [playlistTracks, setPlaylistTracks] = useState([]);
+  // const [playlistName, setPlaylistName] = useState("");
 
   // Track pageload state for Header Text
   // Search State
@@ -84,6 +83,8 @@ function App() {
 
   // Custom Playlist State
   const [savedPlaylistName, setSavedPlaylistName] = useState("New Playlist");
+  const [customTrackList, setCustomTrackList] = useState([]);
+  const [savedPlaylist, setSavedPlaylist] = useState([]);
 
   const parseQuery = (query) => {
     console.log("Track before filtering: ", tracks);
@@ -104,7 +105,7 @@ function App() {
     console.log("Search Results:", searchResults); // Add this to check
   };
   const addTrack = (track) => {
-    setPlaylistTracks((prevTracks) => {
+    setCustomTrackList((prevTracks) => {
       if (!prevTracks.some((t) => t.key === track.key)) {
         return [...prevTracks, track];
       }
@@ -113,17 +114,21 @@ function App() {
   };
 
   const updatePlaylistName = (name) => {
-    setPlaylistName(name);
+    setSavedPlaylistName(name);
   };
 
   const savePlaylistName = (name) => {
     setSavedPlaylistName(name);
     setIsInitialLoad(false);
   };
+  const savePlaylist = (customPlaylist) => {
+    setSavedPlaylist(customTrackList);
+    console.log(customPlaylist);
+  };
   const removeTrack = (track) => {
     console.log("Removing Track...");
-    setPlaylistTracks(
-      playlistTracks.filter((existingTrack) => existingTrack.key !== track.key)
+    setCustomTrackList(
+      customTrackList.filter((existingTrack) => existingTrack.key !== track.key)
     );
   };
 
@@ -157,11 +162,12 @@ function App() {
             <div className="column border2 right-col">
               <Playlist
                 savedPlaylistName={savedPlaylistName}
-                playlistName={playlistName}
+                playlistName={savedPlaylistName}
                 isInitialLoad={isInitialLoad}
-                playlistTracks={playlistTracks}
-                onNameChange={updatePlaylistName}
+                savePlaylist={savePlaylist}
+                customTrackList={customTrackList}
                 saveEvent={savePlaylistName}
+                onNameChange={updatePlaylistName}
                 onRemove={removeTrack}
               />
             </div>
