@@ -11,6 +11,7 @@ const Playlist = ({
   onNameChange,
   saveEvent,
   savedPlaylistName,
+  savedPlaylist,
   onRemove,
   isInitialLoad,
 }) => {
@@ -30,6 +31,9 @@ const Playlist = ({
   };
   const handledEditClick = () => {
     setIsInputVisible(true);
+  };
+  const handlePlaylistSave = () => {
+    console.log(savedPlaylist);
   };
   const [isInputVisible, setIsInputVisible] = useState(false);
   return (
@@ -63,7 +67,7 @@ const Playlist = ({
       <div className="customPlaylistArea">
         {/* <h2>TrackList</h2> */}
         <TrackList tracks={playlistTracks} onRemove={onRemove} />
-        <button>Save your Playlist</button>
+        <button onClick={handlePlaylistSave}>Save your Playlist</button>
       </div>
     </>
   );

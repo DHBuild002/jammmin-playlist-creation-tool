@@ -76,10 +76,14 @@ function App() {
   // ]);
   const [playlistName, setPlaylistName] = useState("");
   const [playlistTracks, setPlaylistTracks] = useState([]);
+
   // Track pageload state for Header Text
+  // Search State
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [savedPlaylistName, setSavedPlaylistName] = useState("New Playlist");
   const [searchResults, setSearchResults] = useState([]);
+
+  // Custom Playlist State
+  const [savedPlaylistName, setSavedPlaylistName] = useState("New Playlist");
 
   const parseQuery = (query) => {
     console.log("Track before filtering: ", tracks);
@@ -119,7 +123,7 @@ function App() {
   const removeTrack = (track) => {
     console.log("Removing Track...");
     setPlaylistTracks(
-      playlistTracks.filter((existingTrack) => existingTrack.id !== track.id)
+      playlistTracks.filter((existingTrack) => existingTrack.key !== track.key)
     );
   };
 
