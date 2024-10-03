@@ -29,14 +29,14 @@ const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
     <>
       <div className="trackContainer">
         <div className="track">
-          <div className="track-info">
             <h2 className="track-name">{track.name}</h2>
-            <p className="track-artist">{track.artist}</p>
-            <p className="track-album">{track.album}</p>
+            <div className="container">
+              <p className="track-artist">{track.artist}</p>
+              <p className="track-album">{track.album}</p>
+            </div>
             {renderAction()}
           </div>
         </div>
-      </div>
     </>
   );
 };

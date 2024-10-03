@@ -32,7 +32,7 @@
     border-radius: 0px;
     box-sizing: border-box;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
     padding: 10px;
     margin: 0;
@@ -42,8 +42,12 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     padding-right: 10px;
+  }
+  .track-artist::after {
+    content: "|"; /* Separator */
+    margin: 0 5px; /* Spacing around separator */
   }
 
   /* .buttonArea{
@@ -78,6 +82,6 @@
     color: white; /* Text color */
     display: flex; /* Flex for centering icon */
     align-items: center; /* Center icon vertically */
-    justify-content: center; /* Center icon horizontally */
+    justify-content: space-evenly; /* Center icon horizontally */
     font-size: 18px;
 }

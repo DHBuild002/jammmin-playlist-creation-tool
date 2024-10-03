@@ -5,7 +5,7 @@
 .track h2 {
     margin: 0;
     color: purple;
-    font-size: .9rem;
+    font-size: 25px;
   }
   .track p {
     margin: 10px;
@@ -17,7 +17,7 @@
 }
 /* Artist and Album Name Styling */
 .track-artist, .track-album {
-  font-size: 10px; /* Smaller font size for artist and album */
+  font-size: 12px; /* Smaller font size for artist and album */
   color: #303030; /* Optional: lighter color for better readability */
 
 }
