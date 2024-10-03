@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Track from "./Track";
+import TrackList from "./TrackList";
 
 const Search = ({ onAdd }) => {
   const [query, setQuery] = useState("");
@@ -44,7 +44,6 @@ const Search = ({ onAdd }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         // Limit results to 3
         const limitedResults = data.tracks.items.slice(0, 3);
         console.log(limitedResults);
@@ -77,13 +76,13 @@ const Search = ({ onAdd }) => {
         </button>
       </div>
 
-      <div className="track-list-container">
+      {/* <div className="track-list-container">
         {results.length > 0 && (
           <ul className="track-list">
             {results.map((track) => (
               <Track
                 track={{
-                  key: track.id,
+                  id: track.id,
                   name: track.name,
                   artist: track.artists.map((artist) => artist.name).join(", "),
                   album: track.album.name,
@@ -93,6 +92,22 @@ const Search = ({ onAdd }) => {
               />
             ))}
           </ul>
+        )}
+      </div> */}
+      <div className="track-list-container">
+        {results.length > 0 && (
+          <TrackList
+            tracks={results.map((track) => ({
+              id: track.id,
+              name: track.name,
+              artist: track.artists.map((artist) => artist.name).join(", "),
+              album: track.album.name,
+              localId: `${track.id}-${Date.now()}`, // Adding a unique localId
+            }))}
+            isRemoval={false}
+            onAdd={onAdd}
+            // onRemove={onRemove}
+          />
         )}
       </div>
     </div>

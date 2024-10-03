@@ -14,7 +14,6 @@ import {
 import { loginToSpotify, getTokenFromUrl } from "./Spotify.js";
 
 function UserAccess({ token, setToken }) {
-  console.log(token);
   function logout() {
     localStorage.removeItem("spotify_access_token"); // Clear token from localStorage
     setToken(null);
@@ -64,13 +63,6 @@ function App() {
     localStorage.getItem("spotify_access_token")
   );
 
-  useEffect(() => {
-    const tokenFromLocalStorage = localStorage.getItem("spotify_access_token");
-    if (tokenFromLocalStorage) {
-      setToken(tokenFromLocalStorage); // Set the token state if it exists
-    }
-  }, []);
-
   // // Set the initial state of tracks
   const [tracks] = useState([]);
   // ]);
@@ -105,9 +97,10 @@ function App() {
     console.log("Search Results:", searchResults); // Add this to check
   };
   const addTrack = (track) => {
+    const uniqueId = { ...track, localId: `${track.id}-${Date.now()}` };
     setCustomTrackList((prevTracks) => {
-      if (!prevTracks.some((t) => t.key === track.key)) {
-        return [...prevTracks, track];
+      if (!prevTracks.some((t) => t.id === track.id)) {
+        return [...prevTracks, uniqueId];
       }
       return prevTracks;
     });
@@ -128,7 +121,7 @@ function App() {
   const removeTrack = (track) => {
     console.log("Removing Track...");
     setCustomTrackList(
-      customTrackList.filter((existingTrack) => existingTrack.key !== track.key)
+      customTrackList.filter((existingTrack) => existingTrack.id !== track.id)
     );
   };
 
@@ -154,10 +147,13 @@ function App() {
         <div className="container playlist-creator-area">
           <div className="row border1">
             <div className="column left-col">
-              {/* Search Module */}
+              {/* Search Module - Handle what the user inputs into the searchbox */}
               <Search onSearch={parseQuery} onAdd={addTrack} />
-              {/* Results of Search in Tracklist format */}
-              <TrackList tracks={searchResults} onAdd={addTrack} />
+              <TrackList
+                tracks={searchResults}
+                onAdd={addTrack}
+                isRemoval={false}
+              />
             </div>
             <div className="column border2 right-col">
               <Playlist
@@ -168,6 +164,7 @@ function App() {
                 customTrackList={customTrackList}
                 saveEvent={savePlaylistName}
                 onNameChange={updatePlaylistName}
+                setSavedPlaylist={savedPlaylist}
                 onRemove={removeTrack}
               />
             </div>
