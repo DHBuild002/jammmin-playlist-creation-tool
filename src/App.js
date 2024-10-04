@@ -71,10 +71,7 @@ function App() {
 
   // // Set the initial state of tracks
   const [tracks] = useState([]);
-  // ]);
-  // const [playlistName, setPlaylistName] = useState("");
 
-  // Track pageload state for Header Text
   // Search State
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [searchResults, setSearchResults] = useState([]);
@@ -178,7 +175,7 @@ function App() {
           </div>
         </div>
       ) : (
-        ""
+        " "
       )}
     </div>
   );
