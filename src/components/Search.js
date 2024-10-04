@@ -15,15 +15,6 @@ const Search = ({ onAdd }) => {
       window.location.hash = ""; // Clear the token from the URL
     }
   }, []);
-  // const handleSearch = () => {
-  //   onSearch(query).then((results) => {
-  //     setSearchResults(results);
-  //   });
-  // const getTokenFromUrl = () => {
-  //   const hash = window.location.hash.substring(1);
-  //   const params = new URLSearchParams(hash);
-  //   return params.get("access_token");
-  // };
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query) return;
