@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import TrackList from "./TrackList";
 import "./styles/Playlist.css";
-
+import { createPlaylistInUserAccount, getUserId } from "../Spotify";
 // Icon List
 import EditIcon from "@mui/icons-material/Edit";
-import { createPlaylistInUserAccount } from "../Spotify.js";
 
 const Playlist = ({
   onNameChange,
@@ -16,7 +15,7 @@ const Playlist = ({
   onRemove,
   isInitialLoad,
   userId,
-  accessToken,
+  token,
 }) => {
   // Handle initial state class for save playlist name:
   const savedNameClass = isInitialLoad ? "initial-state-input" : "";
@@ -32,7 +31,7 @@ const Playlist = ({
     saveEvent(playlistName);
     setIsInputVisible(false);
   };
-  const handledEditClick = () => {
+  const handleEditClick = () => {
     setIsInputVisible(true);
   };
   // const handlePlaylistSave = () => {
@@ -121,18 +120,43 @@ const Playlist = ({
   //   );
   // };
 
-  const savePlaylist = async () => {
-    const trackUris = customTrackList.map(
-      (track) => `spotify:track:${track.id}`
-    ); // Map to Spotify URIs
+  // const savePlaylist = async () => {
+  //   const trackUris = customTrackList.map(
+  //     (track) => `spotify:track:${track.id}`
+  //   ); // Map to Spotify URIs
 
-    // Make your API call to create the playlist using trackUris
-    await createPlaylistInUserAccount(
-      userId,
-      savedPlaylistName,
-      accessToken,
-      trackUris
-    );
+  //   // Make your API call to create the playlist using trackUris
+  //   await createPlaylistInUserAccount(
+  //     userId,
+  //     savedPlaylistName,
+  //     accessToken,
+  //     trackUris
+  //   );
+  // };
+
+  const savePlaylist = async () => {
+    if (!token) {
+      console.error("No access token found. Please log in.");
+      return;
+    }
+
+    try {
+      const userId = await getUserId(token); // Retrieve Spotify user ID
+      const trackUris = customTrackList.map(
+        (track) => `spotify:track:${track.id}`
+      );
+
+      // Create playlist and add tracks
+      await createPlaylistInUserAccount(
+        userId,
+        savedPlaylistName,
+        token,
+        trackUris
+      );
+      console.log("Playlist saved successfully.");
+    } catch (error) {
+      console.error("Error saving playlist:", error);
+    }
   };
 
   const [isInputVisible, setIsInputVisible] = useState(false);
@@ -146,7 +170,7 @@ const Playlist = ({
           >
             {savedPlaylistName}
           </h2>
-          <EditIcon onClick={handledEditClick} className="edit-icon" />
+          <EditIcon onClick={handleEditClick} className="edit-icon" />
         </div>
         {isInputVisible && (
           <div>
@@ -165,7 +189,6 @@ const Playlist = ({
         )}
       </div>
       <div className="customPlaylistArea">
-        {/* <h2>TrackList</h2> */}
         <TrackList
           tracks={customTrackList}
           onRemove={onRemove}

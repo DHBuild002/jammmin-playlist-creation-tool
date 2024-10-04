@@ -62,6 +62,12 @@ function App() {
   const [token, setToken] = useState(
     localStorage.getItem("spotify_access_token")
   );
+  useEffect(() => {
+    const storedToken = localStorage.getItem("spotify_access_token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
   // // Set the initial state of tracks
   const [tracks] = useState([]);
@@ -161,11 +167,12 @@ function App() {
                 playlistName={savedPlaylistName}
                 isInitialLoad={isInitialLoad}
                 savePlaylist={savePlaylist}
-                customTrackList={customTrackList}
                 saveEvent={savePlaylistName}
                 onNameChange={updatePlaylistName}
                 setSavedPlaylist={savedPlaylist}
                 onRemove={removeTrack}
+                customTrackList={customTrackList}
+                token={token}
               />
             </div>
           </div>
