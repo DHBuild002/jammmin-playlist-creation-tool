@@ -62,7 +62,7 @@ function UserAccess({ token, setToken, setIsLoggedIn }) {
     <div className="spotify-container">
       <h2 className="login-txt">Create a custom playlist</h2>
       <button
-        className="w-50 bg-purple-700 border-green-500 text-white p-5 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
+        className="w-50 bg-purple-700 border-white-500 text-white p-1 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
         onClick={handleLogin}
       >
         Login to Spotify

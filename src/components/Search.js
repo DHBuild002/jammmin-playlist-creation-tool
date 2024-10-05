@@ -65,7 +65,7 @@ const Search = ({ onAdd }) => {
       <div className="w-full mb-5">
         <button
           onClick={handleSearch}
-          className="w-full bg-purple-700 border-green-500 text-white p-5 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
+          className="w-full bg-purple-700 border-green-500 text-white p-3 rounded-xl shadow-2xl hover:bg-purple-600 transition-all duration-300 ease-in-out"
         >
           Search
         </button>
