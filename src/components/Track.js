@@ -14,14 +14,17 @@ const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
   const renderAction = () => {
     if (isRemoval) {
       return (
-        <button className="border-none rounded-full" onClick={handleRemove}>
+        <button
+          className="flex items-center justify-center w-16 h-full bg-purple-500 text-white text-3xl rounded-sm shadow-lg hover:bg-purple-600 transition-all duration-300"
+          onClick={handleRemove}
+        >
           -
         </button>
       );
     }
     return (
       <button
-        className="flex items-center justify-center w-16 h-full bg-purple-500 text-white text-3xl rounded-sm shadow-lg hover:bg-blue-600 transition-all duration-300"
+        className="flex items-center justify-center w-16 h-full bg-purple-500 text-white text-3xl rounded-sm shadow-lg hover:bg-purple-600 transition-all duration-300"
         onClick={handleAdd}
       >
         +

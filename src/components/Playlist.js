@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TrackList from "./TrackList";
-import "./styles/Playlist.css";
+// import "./styles/Playlist.css";
 import { createPlaylistInUserAccount, getUserProfile } from "../Spotify";
 // Icon List
 import EditIcon from "@mui/icons-material/Edit";
@@ -25,7 +25,11 @@ const Playlist = ({
     }
   };
   const handleNameChange = (e) => {
-    onNameChange(e.target.value);
+    if (e) {
+      onNameChange(e.target.value);
+    } else {
+      return;
+    }
   };
   const handleNameSave = () => {
     saveEvent(playlistName);
@@ -61,30 +65,40 @@ const Playlist = ({
   };
 
   const [isInputVisible, setIsInputVisible] = useState(false);
+
   return (
     <>
       <div className="playlist">
-        <div className="custom-title-container">
+        <div className="flex flex-row m-auto justify-center text-2xl mt-4">
           <h2
-            className={`custom-title ${savedNameClass}`}
-            placeholder="New Playlist"
+            className="cursor-pointer mr-2 text-purple-950"
+            onClick={handleEditClick}
           >
             {savedPlaylistName}
           </h2>
-          <EditIcon onClick={handleEditClick} className="edit-icon" />
+          <EditIcon
+            className="edit-icon mt-1 border-purple-500 border-solid border-2 cursor-pointer text-purple-500 p-x bg-white rounded-lg text-whtie"
+            onClick={handleEditClick}
+          />
         </div>
         {isInputVisible && (
           <div>
             <div className="row input-area">
               <input
-                className="input-custom-title"
+                className="bg-white rounded-lg text-sm p-3 cursor-pointer border-gray-400"
                 value={playlistName}
                 onChange={handleNameChange}
                 onFocus={handleFocus}
+                placeholder="Enter a name for your playlist..."
               />
             </div>
             <div className="playlistTitle">
-              <button onClick={handleNameSave}>Save</button>
+              <button
+                className="border-solid border-purple-500 border-2 rounded w-1/2 mt-1 bg-white"
+                onClick={handleNameSave}
+              >
+                Save
+              </button>
             </div>
           </div>
         )}
@@ -95,7 +109,12 @@ const Playlist = ({
           onRemove={onRemove}
           isRemoval={true}
         />
-        <button onClick={savePlaylist}>Save your Playlist</button>
+        <button
+          className="w-50 bg-purple-600 border-solid border-x border-white-500 m-10 text-white p-3 rounded-xl hover:bg-purple-800 transition-all duration-300 ease-in-out"
+          onClick={savePlaylist}
+        >
+          Save your Playlist
+        </button>
       </div>
     </>
   );

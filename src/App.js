@@ -118,7 +118,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   // Custom Playlist State
-  const [savedPlaylistName, setSavedPlaylistName] = useState("New Playlist");
+  const [savedPlaylistName, setSavedPlaylistName] = useState("");
   const [customTrackList, setCustomTrackList] = useState([]);
   const [savedPlaylist, setSavedPlaylist] = useState([]);
 
@@ -152,8 +152,8 @@ function App() {
     setSavedPlaylistName(name);
   };
 
-  const savePlaylistName = (name) => {
-    setSavedPlaylistName(name);
+  const savePlaylistName = (playlistName) => {
+    setSavedPlaylistName(playlistName);
     setIsInitialLoad(false);
   };
   const savePlaylist = (customPlaylist) => {
