@@ -11,20 +11,50 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import { loginToSpotify, getTokenFromUrl } from "./Spotify.js";
+import { loginToSpotify, getTokenFromUrl, getUserProfile } from "./Spotify.js";
 
-function UserAccess({ token, setToken }) {
-  function logout() {
+function UserAccess({ token, setToken, setIsLoggedIn }) {
+  // Profile State management
+  const [user, setUser] = useState("");
+  const [error, setError] = useState(null);
+  const logout = () => {
     localStorage.removeItem("spotify_access_token"); // Clear token from localStorage
+    setIsLoggedIn(false);
     setToken(null);
     window.location.href = "/"; // Redirect to UserAccess after logging out
-  }
+  };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    loginToSpotify(); // Trigger the Spotify login process
+  };
+
+  useEffect(() => {
+    if (token) {
+      (async () => {
+        try {
+          const profile = await getUserProfile(token);
+          setUser(profile);
+          console.log(profile);
+        } catch (error) {
+          setError("Failed to load user profile");
+        }
+      })();
+    }
+  }, [token]);
+
+  // // Handle loading, error, or rendering the profile
+  // if (error) {
+  //   return <div>{error}</div>; // Display error message if fetch fails
+  // }
+  // if (!user || !user.username) return <div>Loading...</div>; // Ensure user and username exist
   return token ? (
     <div className="spotify-container">
-      <h1>Welcome!</h1>
-      <p className="sub-text">You logged in with token:</p>
-      <p className="token">{token}</p>
-      <button className="btn spotify-btn" onClick={logout}>
+      <h1>Welcome, {user.username}</h1>
+      <button
+        className="w-1/2 bg-purple-700 border-green-500 text-white p-3 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
+        onClick={logout}
+      >
         Log Out
       </button>
     </div>
@@ -32,9 +62,8 @@ function UserAccess({ token, setToken }) {
     <div className="spotify-container">
       <h2 className="login-txt">Create a custom playlist</h2>
       <button
-        className="btn spotify-btn"
-        id="login-btn"
-        onClick={loginToSpotify}
+        className="w-50 bg-purple-700 border-green-500 text-white p-5 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
+        onClick={handleLogin}
       >
         Login to Spotify
       </button>
@@ -58,16 +87,28 @@ function Callback({ setToken }) {
 }
 
 function App() {
-  // Login State
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const storedToken = localStorage.getItem("spotify_access_token");
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    }
+  }, [isLoggedIn]);
+
   const [token, setToken] = useState(
     localStorage.getItem("spotify_access_token")
   );
+
   useEffect(() => {
     const storedToken = localStorage.getItem("spotify_access_token");
     if (storedToken) {
       setToken(storedToken);
     }
   }, []);
+  // Login State
 
   // // Set the initial state of tracks
   const [tracks] = useState([]);
@@ -100,13 +141,11 @@ function App() {
     console.log("Search Results:", searchResults); // Add this to check
   };
   const addTrack = (track) => {
-    const uniqueId = { ...track, localId: `${track.id}-${Date.now()}` };
-    setCustomTrackList((prevTracks) => {
-      if (!prevTracks.some((t) => t.id === track.id)) {
-        return [...prevTracks, uniqueId];
-      }
-      return prevTracks;
-    });
+    setCustomTrackList((prevTracks) =>
+      prevTracks.some((t) => t.id === track.id)
+        ? prevTracks
+        : [...prevTracks, { ...track, localId: `${track.id}-${Date.now()}` }]
+    );
   };
 
   const updatePlaylistName = (name) => {
@@ -136,7 +175,13 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<UserAccess token={token} setToken={setToken} />}
+              element={
+                <UserAccess
+                  token={token}
+                  setToken={setToken}
+                  setIsLoggedIn={setIsLoggedIn}
+                />
+              }
             />
             <Route
               path="/callback"

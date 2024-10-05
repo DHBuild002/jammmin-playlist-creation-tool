@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TrackList from "./TrackList";
 import "./styles/Playlist.css";
-import { createPlaylistInUserAccount, getUserId } from "../Spotify";
+import { createPlaylistInUserAccount, getUserProfile } from "../Spotify";
 // Icon List
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -42,7 +42,7 @@ const Playlist = ({
     }
 
     try {
-      const userId = await getUserId(token); // Retrieve Spotify user ID
+      const userId = await getUserProfile(token); // Retrieve Spotify user ID
       const trackUris = customTrackList.map(
         (track) => `spotify:track:${track.id}`
       );

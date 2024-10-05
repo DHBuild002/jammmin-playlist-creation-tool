@@ -22,57 +22,28 @@ export const getTokenFromUrl = () => {
     .find((parts) => parts[0] === "access_token")[1];
 };
 
-export const getUserId = async (accessToken) => {
-  const response = await fetch("https://api.spotify.com/v1/me", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  const data = await response.json();
-  return data.id;
+export const getUserProfile = async (accessToken) => {
+  console.log("Access Token:", accessToken);
+  try {
+    const response = await fetch("https://api.spotify.com/v1/me", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user profile");
+    }
+
+    const data = await response.json();
+    return {
+      id: data.id, // Ensure these keys are correct
+      username: data.display_name || "User", // Fallback if display_name is null
+    };
+  } catch (error) {
+    throw new Error(`Error fetching user profile: ${error.message}`);
+  }
 };
-
-// // Logic for Creating, Adding playlists to the Spotify API
-// export const createPlaylistInUserAccount = async (
-//   user_id,
-//   playlistName,
-//   accessToken
-// ) => {
-//   console.log(user_id);
-//   const response = await fetch(
-//     `https://api.spotify.com/v1/users/${user_id}/playlists`,
-//     {
-//       method: "POST",
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         name: playlistName,
-//         description: "Created from Jammmin app",
-//         public: false,
-//       }),
-//     }
-//   );
-//   if (!response.ok) {
-//     const errorData = await response.json();
-//     console.error("Error creating playlist:", errorData);
-//     throw new Error(`Failed to create playlist: ${response.statusText}`);
-//   }
-//   const data = await response.json();
-//   return data.id;
-// };
-// const savePlaylist = async () => {
-//   const trackUris = customTrackList.map((track) => `spotify:track:${track.id}`); // Map to Spotify URIs
-
-//   // Make your API call to create the playlist using trackUris
-//   await createPlaylistInUserAccount(
-//     userId,
-//     savedPlaylistName,
-//     accessToken,
-//     trackUris
-//   );
-// };
 
 // In your createPlaylistInUserAccount function, you'd adjust to handle the URIs
 export const createPlaylistInUserAccount = async (

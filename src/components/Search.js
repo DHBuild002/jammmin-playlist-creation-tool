@@ -11,10 +11,10 @@ const Search = ({ onAdd }) => {
     if (token) {
       setAccessToken(token);
       localStorage.setItem("spotify_access_token", token);
-      console.log(token);
       window.location.hash = ""; // Clear the token from the URL
     }
   }, []);
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query) return;
