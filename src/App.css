@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./components/styles/TrackList.css";
+
 .App {
   text-align: center;
 }

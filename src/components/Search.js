@@ -59,6 +59,7 @@ const Search = ({ onAdd }) => {
           type="text"
           className="w-full p-2 border rounded shadow-md"
           placeholder="Search..."
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
       <div className="w-full">

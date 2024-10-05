@@ -76,7 +76,7 @@
     align-items: center;
     flex-direction: column;
   }
-  button{
+  /* button{
     padding: 0.5rem 1rem;
     border: 1px solid #adc0ff;
     border-radius: 5px;
@@ -84,4 +84,4 @@
     text-decoration: none;
     background-color: purple;
     color: white;
-  }
+  } */

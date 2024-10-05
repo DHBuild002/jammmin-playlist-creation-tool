@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./styles/Track.css";
+// import "./styles/Track.css";
 
 const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
   const handleAdd = () => {
@@ -14,29 +14,33 @@ const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
   const renderAction = () => {
     if (isRemoval) {
       return (
-        <button className="track-action" onClick={handleRemove}>
+        <button className="border-none rounded-full" onClick={handleRemove}>
           -
         </button>
       );
     }
     return (
-      <button className="track-action" onClick={handleAdd}>
+      <button
+        className="rounded bg-purple-900 h-8 w-8 text-white flex items-center align-center justify-center"
+        onClick={handleAdd}
+      >
         +
       </button>
     );
   };
   return (
     <>
-      <div className="trackContainer">
-        <div className="track">
-            <h2 className="track-name">{track.name}</h2>
-            <div className="container">
-              <p className="track-artist">{track.artist}</p>
-              <p className="track-album">{track.album}</p>
-            </div>
-            {renderAction()}
+      <div className="mx-auto bg-pink-400 m-1 rounded">
+        <div className="border-radius-20 flex flex-row m-6">
+          <div className="container text-left w-full">
+            <h2 className="font-bold text-left">{track.name}</h2>
+            <p className="flex flex-column text-xs">
+              {track.artist} {track.album}
+            </p>
           </div>
+          <div className="flex items-center">{renderAction()}</div>
         </div>
+      </div>
     </>
   );
 };
