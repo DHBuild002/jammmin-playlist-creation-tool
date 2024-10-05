@@ -30,7 +30,7 @@ const Track = ({ track, artist, album, onAdd, onRemove, isRemoval }) => {
   };
   return (
     <>
-      <div className="mx-auto bg-pink-400 m-1 rounded">
+      <div className="container mx-auto bg-pink-400 m-1 rounded">
         <div className="border-radius-20 flex flex-row m-6">
           <div className="container text-left w-full">
             <h2 className="font-bold text-left">{track.name}</h2>

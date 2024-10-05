@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
-import "./components/styles/Search.css";
-// import "./components/styles/TrackList.css";
-import "./";
-import "./components/styles/Spotify.css";
 import Playlist from "./components/Playlist";
 import TrackList from "./components/TrackList";
 import Search from "./components/Search.js";
-import "./components/styles/Search.css";
+
+import "./App.css";
+
 import {
   BrowserRouter as Router,
   Routes,

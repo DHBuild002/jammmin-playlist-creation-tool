@@ -62,7 +62,7 @@ const Search = ({ onAdd }) => {
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
-      <div className="w-full">
+      <div className="w-full mb-5">
         <button
           onClick={handleSearch}
           className="w-full bg-purple-700 border-green-500 text-white p-5 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"

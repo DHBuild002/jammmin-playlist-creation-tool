@@ -32,7 +32,7 @@
 }
 .container{
   display: flex;
-  gap: 25%;
+  gap: 0;
   align-self: center;
   flex-direction: column;
 }
