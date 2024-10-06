@@ -22,13 +22,10 @@ export const getTokenFromUrl = () => {
 };
 
 export const getUserProfile = async (accessToken) => {
-  console.log("Access Token:", accessToken);
   try {
-    const response = await fetch("https://api.spotify.com/v1/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3001/spotify-api/user?token=${accessToken}`
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch user profile");
@@ -36,8 +33,8 @@ export const getUserProfile = async (accessToken) => {
 
     const data = await response.json();
     return {
-      id: data.id, // Ensure these keys are correct
-      username: data.display_name || "User", // Fallback if display_name is null
+      id: data.id,
+      username: data.display_name || "User",
     };
   } catch (error) {
     throw new Error(`Error fetching user profile: ${error.message}`);
@@ -52,7 +49,7 @@ export const createPlaylistInUserAccount = async (
   trackUris
 ) => {
   const response = await fetch(
-    `https://api.spotify.com/v1/users/${userId}/playlists`,
+    `http://localhost:3001/spotify-api?url=https://api.spotify.com/v1/users/${userId.id}/playlists&token=${accessToken}`,
     {
       method: "POST",
       headers: {
@@ -67,6 +64,22 @@ export const createPlaylistInUserAccount = async (
     }
   );
 
+  // const response = await fetch(
+  //   `https://api.spotify.com/v1/users/${userId}/playlists`,
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       name: playlistName,
+  //       description: "Created from Jammmin app",
+  //       public: false,
+  //     }),
+  //   }
+  // );
+
   const playlistData = await response.json();
 
   // Now add tracks to the newly created playlist
@@ -76,14 +89,17 @@ export const createPlaylistInUserAccount = async (
 };
 
 const addTracksToPlaylist = async (playlistId, trackUris, accessToken) => {
-  await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      uris: trackUris,
-    }),
-  });
+  await fetch(
+    `http://localhost:3001/spotify-api?url=https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uris: trackUris,
+      }),
+    }
+  );
 };

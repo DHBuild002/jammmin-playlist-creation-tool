@@ -153,6 +153,7 @@ function App() {
   };
 
   const savePlaylistName = (playlistName) => {
+    console.log(playlistName);
     setSavedPlaylistName(playlistName);
     setIsInitialLoad(false);
   };
