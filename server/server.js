@@ -68,6 +68,10 @@ app.post("/spotify-api/playlists", async (req, res) => {
     res.json(spotifyResponse.data);
   } catch (error) {
     console.error("Error creating playlist:", error);
+    console.error(
+      "Error creating playlist:",
+      error.response?.data || error.message
+    );
     res.status(500).json({
       error: "Failed to create playlist",
       details: error.message,

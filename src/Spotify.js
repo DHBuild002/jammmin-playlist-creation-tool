@@ -41,51 +41,48 @@ export const getUserProfile = async (accessToken) => {
   }
 };
 
-// In your createPlaylistInUserAccount function, you'd adjust to handle the URIs
 export const createPlaylistInUserAccount = async (
   userId,
   playlistName,
-  accessToken,
-  trackUris
+  accessToken
 ) => {
+  const url = `https://api.spotify.com/v1/users/${userId.id}/playlists`;
+  const body = {
+    name: playlistName,
+    description: "Created from Jammmin app",
+    public: false,
+  };
+
   const response = await fetch(
-    `http://localhost:3001/spotify-api?url=https://api.spotify.com/v1/users/${userId.id}/playlists&token=${accessToken}`,
+    `http://localhost:3001/spotify-api/playlists?url=${url}&token=${accessToken}`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: playlistName,
-        description: "Created from Jammmin app",
-        public: false,
-      }),
+      body: JSON.stringify(body),
     }
   );
 
-  // const response = await fetch(
-  //   `https://api.spotify.com/v1/users/${userId}/playlists`,
-  //   {
-  //     method: "POST",
-  //     headers: {
-  //       Authorization: `Bearer ${accessToken}`,
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       name: playlistName,
-  //       description: "Created from Jammmin app",
-  //       public: false,
-  //     }),
-  //   }
-  // );
+  if (!response.ok) {
+    // Attempt to parse error details if available
+    const errorMessage = `Failed to create playlist: ${
+      response.statusText || "Unknown error"
+    }`;
+    let errorData;
+    try {
+      errorData = await response.json(); // Check for detailed error response
+      console.error("Detailed error response from Spotify:", errorData);
+      throw new Error(errorData.error?.message || errorMessage);
+    } catch (error) {
+      // Handle case where response is not in JSON format
+      throw new Error(errorMessage);
+    }
+  }
 
   const playlistData = await response.json();
 
-  // Now add tracks to the newly created playlist
-  if (playlistData.id) {
-    await addTracksToPlaylist(playlistData.id, trackUris, accessToken);
-  }
+  return playlistData; // Return the created playlist data
 };
 
 const addTracksToPlaylist = async (playlistId, trackUris, accessToken) => {

@@ -18,7 +18,7 @@ const Playlist = ({
   token,
 }) => {
   // Handle initial state class for save playlist name:
-  const savedNameClass = isInitialLoad ? "initial-state-input" : "";
+  // const savedNameClass = isInitialLoad ? "initial-state-input" : "";
   const handleFocus = (e) => {
     if (e.target.value) {
       e.target.value = "";
@@ -55,6 +55,7 @@ const Playlist = ({
       await createPlaylistInUserAccount(
         userId,
         savedPlaylistName,
+        customTrackList,
         token,
         trackUris
       );
