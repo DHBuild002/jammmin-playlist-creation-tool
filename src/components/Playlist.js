@@ -70,20 +70,37 @@ const Playlist = ({
     <>
       <div className="playlist">
         <div className="flex flex-row m-auto justify-center text-2xl mt-4">
-          <h2
-            className="cursor-pointer mr-2 text-purple-950"
+          {/* {/* <h2
+            className="cursor-pointer mr-2 text-purple-950 border-b pb-1 border-y-white w-1/3"
             onClick={handleEditClick}
-          >
-            {savedPlaylistName}
-          </h2>
+          > 
+            isInputVisible ? 'Enter Text' : savedPlaylistName
+          </h2> */}
           <EditIcon
             className="edit-icon mt-1 border-purple-500 border-solid border-2 cursor-pointer text-purple-500 p-x bg-white rounded-lg text-whtie"
             onClick={handleEditClick}
           />
         </div>
+        {isInputVisible ? (
+          <input
+            className="bg-white rounded-lg text-sm p-3 cursor-pointer border-gray-400"
+            value={playlistName}
+            onChange={handleNameChange}
+            onFocus={handleFocus}
+            placeholder="Enter a name for your playlist..."
+          />
+        ) : (
+          <h2
+            className="cursor-pointer mr-2 text-purple-950 border-b pb-1 border-b-white w-1/3"
+            onClick={handleEditClick}
+          >
+            {savedPlaylistName}
+          </h2>
+        )}
+
         {isInputVisible && (
           <div>
-            <div className="row input-area">
+            {/* <div className="row input-area">
               <input
                 className="bg-white rounded-lg text-sm p-3 cursor-pointer border-gray-400"
                 value={playlistName}
@@ -91,7 +108,7 @@ const Playlist = ({
                 onFocus={handleFocus}
                 placeholder="Enter a name for your playlist..."
               />
-            </div>
+            </div> */}
             <div className="playlistTitle">
               <button
                 className="border-solid border-purple-500 border-2 rounded w-1/2 mt-1 bg-white"
@@ -119,5 +136,4 @@ const Playlist = ({
     </>
   );
 };
-
 export default Playlist;
