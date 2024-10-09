@@ -157,7 +157,7 @@ function App() {
     setSavedPlaylistName(playlistName);
     setIsInitialLoad(false);
   };
-  const savePlaylist = (customPlaylist) => {
+  const saveCustomPlaylist = (customPlaylist) => {
     setSavedPlaylist(customTrackList);
     console.log(customPlaylist);
   };
@@ -206,15 +206,11 @@ function App() {
             </div>
             <div className="column border2 right-col">
               <Playlist
-                savedPlaylistName={savedPlaylistName}
-                playlistName={savedPlaylistName}
-                isInitialLoad={isInitialLoad}
-                savePlaylist={savePlaylist}
-                saveEvent={savePlaylistName}
                 onNameChange={updatePlaylistName}
-                setSavedPlaylist={savedPlaylist}
+                playlistName={savedPlaylistName}
+                onSave={customTrackList}
+                saveEvent={savePlaylistName}
                 onRemove={removeTrack}
-                customTrackList={customTrackList}
                 token={token}
               />
             </div>

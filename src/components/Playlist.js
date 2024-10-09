@@ -8,13 +8,9 @@ import EditIcon from "@mui/icons-material/Edit";
 const Playlist = ({
   onNameChange,
   playlistName,
-  customTrackList,
+  onSave,
   saveEvent,
-  savedPlaylistName,
-  setSavedPlaylist,
   onRemove,
-  isInitialLoad,
-  userId,
   token,
 }) => {
   // Handle initial state class for save playlist name:
@@ -47,21 +43,13 @@ const Playlist = ({
 
     try {
       const userId = await getUserProfile(token); // Retrieve Spotify user ID
-      const trackUris = customTrackList.map(
-        (track) => `spotify:track:${track.id}`
-      );
+      const trackUris = onSave.map((track) => `spotify:track:${track.id}`);
 
       // Create playlist and add tracks
-      await createPlaylistInUserAccount(
-        userId,
-        savedPlaylistName,
-        customTrackList,
-        token,
-        
-        trackUris
-      );
+      await createPlaylistInUserAccount(userId, playlistName, token);
       console.log("Playlist saved successfully.");
     } catch (error) {
+      console.log(playlistName);
       console.error("Error saving playlist:", error);
     }
   };
@@ -96,7 +84,7 @@ const Playlist = ({
             className="cursor-pointer mr-2 text-purple-950 border-b pb-1 border-b-white w-1/3"
             onClick={handleEditClick}
           >
-            {savedPlaylistName}
+            {playlistName}
           </h2>
         )}
 
@@ -123,11 +111,7 @@ const Playlist = ({
         )}
       </div>
       <div className="customPlaylistArea">
-        <TrackList
-          tracks={customTrackList}
-          onRemove={onRemove}
-          isRemoval={true}
-        />
+        <TrackList tracks={trackUris} onRemove={onRemove} isRemoval={true} />
         <button
           className="w-50 bg-purple-600 border-solid border-x border-white-500 m-10 text-white p-3 rounded-xl hover:bg-purple-800 transition-all duration-300 ease-in-out"
           onClick={savePlaylist}

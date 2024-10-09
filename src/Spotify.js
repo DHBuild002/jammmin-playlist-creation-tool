@@ -56,14 +56,14 @@ export const createPlaylistInUserAccount = async (
   const response = await fetch(
     `http://localhost:3001/spotify-api/playlists?url=${url}&token=${accessToken}`,
     {
-      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      method: "POST",
+      body: JSON.stringify({ body }),
     }
   );
-
+ 
   if (!response.ok) {
     // Attempt to parse error details if available
     const errorMessage = `Failed to create playlist: ${
