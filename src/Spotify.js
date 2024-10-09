@@ -73,6 +73,7 @@ export const createPlaylistInUserAccount = async (
     try {
       errorData = await response.json(); // Check for detailed error response
       console.error("Detailed error response from Spotify:", errorData);
+      console.log(accessToken);
       throw new Error(errorData.error?.message || errorMessage);
     } catch (error) {
       // Handle case where response is not in JSON format
