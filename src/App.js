@@ -76,6 +76,7 @@ function Callback({ setToken }) {
 
   useEffect(() => {
     const accessToken = getTokenFromUrl();
+
     if (accessToken) {
       localStorage.setItem("spotify_access_token", accessToken);
       setToken(accessToken); // Set the token state
@@ -159,7 +160,7 @@ function App() {
   };
   const saveCustomPlaylist = (customPlaylist) => {
     setSavedPlaylist(customTrackList);
-    console.log(customPlaylist);
+    console.log(customTrackList);
   };
   const removeTrack = (track) => {
     console.log("Removing Track...");
@@ -208,7 +209,8 @@ function App() {
               <Playlist
                 onNameChange={updatePlaylistName}
                 playlistName={savedPlaylistName}
-                onSave={customTrackList}
+                customTrackList={customTrackList}
+                onSave={saveCustomPlaylist}
                 saveEvent={savePlaylistName}
                 onRemove={removeTrack}
                 token={token}

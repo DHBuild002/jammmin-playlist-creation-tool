@@ -8,6 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 const Playlist = ({
   onNameChange,
   playlistName,
+  customTrackList,
   onSave,
   saveEvent,
   onRemove,
@@ -43,7 +44,6 @@ const Playlist = ({
 
     try {
       const userId = await getUserProfile(token); // Retrieve Spotify user ID
-      const trackUris = onSave.map((track) => `spotify:track:${track.id}`);
 
       // Create playlist and add tracks
       await createPlaylistInUserAccount(userId, playlistName, token);
@@ -111,7 +111,11 @@ const Playlist = ({
         )}
       </div>
       <div className="customPlaylistArea">
-        <TrackList tracks={trackUris} onRemove={onRemove} isRemoval={true} />
+        <TrackList
+          tracks={customTrackList}
+          onRemove={onRemove}
+          isRemoval={true}
+        />
         <button
           className="w-50 bg-purple-600 border-solid border-x border-white-500 m-10 text-white p-3 rounded-xl hover:bg-purple-800 transition-all duration-300 ease-in-out"
           onClick={savePlaylist}

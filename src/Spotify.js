@@ -24,7 +24,12 @@ export const getTokenFromUrl = () => {
 export const getUserProfile = async (accessToken) => {
   try {
     const response = await fetch(
-      `http://localhost:3001/spotify-api/user?token=${accessToken}`
+      `https://api.spotify.com/v1/me`, // Fixing the URL structure
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // Use Authorization header
+        },
+      }
     );
 
     if (!response.ok) {
@@ -63,7 +68,7 @@ export const createPlaylistInUserAccount = async (
       body: JSON.stringify({ body }),
     }
   );
- 
+
   if (!response.ok) {
     // Attempt to parse error details if available
     const errorMessage = `Failed to create playlist: ${
