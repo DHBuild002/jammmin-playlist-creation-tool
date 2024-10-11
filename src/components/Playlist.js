@@ -9,7 +9,6 @@ const Playlist = ({
   onNameChange,
   playlistName,
   customTrackList,
-  onSave,
   saveEvent,
   onRemove,
   token,

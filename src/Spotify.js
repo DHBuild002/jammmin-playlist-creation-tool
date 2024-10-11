@@ -51,9 +51,16 @@ export const createPlaylistInUserAccount = async (
   playlistName,
   accessToken
 ) => {
+  console.log(playlistName);
+  // Check if playlistName is undefined or missing
+  if (!playlistName || playlistName.trim() === "") {
+    console.error("Playlist name is required.");
+
+    return;
+  }
   const url = `https://api.spotify.com/v1/users/${userId.id}/playlists`;
   const body = {
-    name: playlistName,
+    name: "TEST Name",
     description: "Created from Jammmin app",
     public: false,
   };
@@ -62,10 +69,11 @@ export const createPlaylistInUserAccount = async (
     `http://localhost:3001/spotify-api/playlists?url=${url}&token=${accessToken}`,
     {
       headers: {
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ body }),
+      body: JSON.stringify(body),
     }
   );
 

@@ -121,7 +121,7 @@ function App() {
   // Custom Playlist State
   const [savedPlaylistName, setSavedPlaylistName] = useState("");
   const [customTrackList, setCustomTrackList] = useState([]);
-  const [savedPlaylist, setSavedPlaylist] = useState([]);
+  // const [savedPlaylist, setSavedPlaylist] = useState([]);
 
   const parseQuery = (query) => {
     console.log("Track before filtering: ", tracks);
@@ -158,8 +158,9 @@ function App() {
     setSavedPlaylistName(playlistName);
     setIsInitialLoad(false);
   };
-  const saveCustomPlaylist = (customPlaylist) => {
-    setSavedPlaylist(customTrackList);
+  const sendPlaylistToAccount = (customTrackList) => {
+    setCustomTrackList(customTrackList);
+    
     console.log(customTrackList);
   };
   const removeTrack = (track) => {
@@ -207,10 +208,10 @@ function App() {
             </div>
             <div className="column border2 right-col">
               <Playlist
-                onNameChange={updatePlaylistName}
                 playlistName={savedPlaylistName}
+                onNameChange={updatePlaylistName}
                 customTrackList={customTrackList}
-                onSave={saveCustomPlaylist}
+                onSave={sendPlaylistToAccount}
                 saveEvent={savePlaylistName}
                 onRemove={removeTrack}
                 token={token}
