@@ -150,6 +150,7 @@ function App() {
         ? prevTracks
         : [...prevTracks, { ...track, localId: `${track.id}-${Date.now()}` }]
     );
+    console.log(customTrackList);
   };
 
   const updatePlaylistName = (name) => {

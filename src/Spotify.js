@@ -49,7 +49,8 @@ export const getUserProfile = async (accessToken) => {
 export const createPlaylistInUserAccount = async (
   userId,
   playlistName,
-  accessToken
+  accessToken,
+  trackUris
 ) => {
   console.log(playlistName);
   // Check if playlistName is undefined or missing
@@ -58,24 +59,21 @@ export const createPlaylistInUserAccount = async (
 
     return;
   }
-  const url = `https://api.spotify.com/v1/users/${userId.id}/playlists`;
+  const url = `https://api.spotify.com/v1/users/${userId.id}/playlists?url=`;
   const body = {
-    name: "TEST Name",
+    name: playlistName,
     description: "Created from Jammmin app",
     public: false,
   };
 
-  const response = await fetch(
-    `http://localhost:3001/spotify-api/playlists?url=${url}&token=${accessToken}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(body),
-    }
-  );
+  const response = await fetch(`${url}&token=${accessToken}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(body),
+  });
 
   if (!response.ok) {
     // Attempt to parse error details if available
@@ -96,13 +94,21 @@ export const createPlaylistInUserAccount = async (
 
   const playlistData = await response.json();
 
-  return playlistData; // Return the created playlist data
+  // After creating the playlist, call addTracksToPlaylist with the playlistId
+  if (playlistData.id && trackUris && trackUris.length > 0) {
+    await addTracksToPlaylist(playlistData.id, trackUris, accessToken);
+    console.log(`Tracks added to playlist with ID: ${playlistData.id}`);
+  }
+
+  // return playlistData; // Return the created playlist data
+  console.log("Playlist created:", playlistData); // Log the created playlist data
 };
 
 const addTracksToPlaylist = async (playlistId, trackUris, accessToken) => {
-  await fetch(
-    `http://localhost:3001/spotify-api?url=https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
-    {
+  const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+
+  try {
+    await fetch(`${url}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -111,6 +117,8 @@ const addTracksToPlaylist = async (playlistId, trackUris, accessToken) => {
       body: JSON.stringify({
         uris: trackUris,
       }),
-    }
-  );
+    });
+  } catch (error) {
+    console.error("Error adding tracks");
+  }
 };
