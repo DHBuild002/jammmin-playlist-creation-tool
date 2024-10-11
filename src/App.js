@@ -48,15 +48,18 @@ function UserAccess({ token, setToken, setIsLoggedIn }) {
   //   return <div>{error}</div>; // Display error message if fetch fails
   // }
   // if (!user || !user.username) return <div>Loading...</div>; // Ensure user and username exist
+
   return token ? (
-    <div className="spotify-container">
-      <h1>Welcome, {user.username}</h1>
-      <button
-        className="w-1/2 bg-purple-700 border-green-500 text-white p-3 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
-        onClick={logout}
-      >
-        Log Out
-      </button>
+    <div className="container">
+      <div className="flex justify-end items-center space-x-4 p-4 mx-auto w-2/3">
+        <h1 className="">Welcome, {user.username}</h1>
+        <button
+          className="w-40 bg-purple-700 border-green-500 text-white p-3 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
+          onClick={logout}
+        >
+          Log Out
+        </button>
+      </div>
     </div>
   ) : (
     <div className="spotify-container">
@@ -160,7 +163,7 @@ function App() {
   };
   const sendPlaylistToAccount = (customTrackList) => {
     setCustomTrackList(customTrackList);
-    
+
     console.log(customTrackList);
   };
   const removeTrack = (track) => {
