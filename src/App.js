@@ -54,7 +54,7 @@ function UserAccess({ token, setToken, setIsLoggedIn }) {
       <div className="flex justify-end items-center space-x-4 p-4 mx-auto w-2/3">
         <h1 className="">Welcome, {user.username}</h1>
         <button
-          className="w-40 bg-purple-700 border-green-500 text-white p-3 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
+          className="w-20 bg-white-700 border-purple-700 border text-purple-700 p-1 rounded-xl shadow-sm hover:bg-grey-600 transition-all duration-300 ease-in-out"
           onClick={logout}
         >
           Log Out
