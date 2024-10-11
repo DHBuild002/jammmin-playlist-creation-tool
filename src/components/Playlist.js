@@ -67,7 +67,7 @@ const Playlist = ({
           </h2> */}
           {isInputVisible ? (
             <input
-              className="bg-white rounded-lg text-sm p-3 cursor-pointer border-gray-400"
+              className="bg-white mr-5 w-1/2 rounded-lg text-sm p-1 cursor-pointer border-gray-400"
               value={playlistName}
               onChange={handleNameChange}
               onFocus={handleFocus}
