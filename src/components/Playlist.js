@@ -44,8 +44,17 @@ const Playlist = ({
     try {
       const userId = await getUserProfile(token); // Retrieve Spotify user ID
 
+      const trackUris = customTrackList
+        .map((track) => track.uri)
+        .filter((uri) => uri !== undefined);
+
+      if (trackUris.length === 0) {
+        console.log("No valid URIs in the track list.");
+      }
+      console.log("Track URIs: ", trackUris);
+
       // Create playlist and add tracks
-      await createPlaylistInUserAccount(userId, playlistName, token);
+      await createPlaylistInUserAccount(userId, playlistName, token, trackUris);
       console.log("Playlist saved successfully.");
     } catch (error) {
       console.log(playlistName);

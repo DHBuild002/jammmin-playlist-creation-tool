@@ -145,27 +145,32 @@ function App() {
     console.log("Search Results:", searchResults); // Add this to check
   };
   const addTrack = (track) => {
+    console.log("Adding Track: ", track);
     setCustomTrackList((prevTracks) =>
       prevTracks.some((t) => t.id === track.id)
         ? prevTracks
-        : [...prevTracks, { ...track, localId: `${track.id}-${Date.now()}` }]
+        : [
+            ...prevTracks,
+            {
+              ...track,
+              uri: `spotify:track:${track.id}`,
+              localId: `${track.id}-${Date.now()}`,
+            },
+          ]
     );
-    console.log(customTrackList);
   };
+  useEffect(() => {
+    console.log(customTrackList);
+  }, [customTrackList]);
 
   const updatePlaylistName = (name) => {
     setSavedPlaylistName(name);
   };
 
-  const savePlaylistName = (playlistName) => {
+  const assignNewPlaylistName = (playlistName) => {
     console.log(playlistName);
     setSavedPlaylistName(playlistName);
     setIsInitialLoad(false);
-  };
-  const sendPlaylistToAccount = (customTrackList) => {
-    setCustomTrackList(customTrackList);
-
-    console.log(customTrackList);
   };
   const removeTrack = (track) => {
     console.log("Removing Track...");
@@ -173,6 +178,23 @@ function App() {
       customTrackList.filter((existingTrack) => existingTrack.id !== track.id)
     );
   };
+
+  // const sendPlaylistToAccount = async () => {
+  //   if (customTrackList === 0) {
+  //     console.log("Playlist is Empty - Please add tracks");
+  //     return;
+  //   }
+  //   // const trackUris = customTrackList.map((track) => track.uri);
+
+  //   // const trackUris = customTrackList
+  //   //   ? customTrackList
+  //   //       .map((track) => track.uri)
+  //   //       .filter((uri) => uri !== undefined)
+  //   //   : [];
+
+  //   setCustomTrackList(trackUris);
+  //   console.log(customTrackList);
+  // };
 
   return (
     <div className="App">
@@ -214,9 +236,8 @@ function App() {
               <Playlist
                 playlistName={savedPlaylistName}
                 onNameChange={updatePlaylistName}
+                saveEvent={assignNewPlaylistName}
                 customTrackList={customTrackList}
-                onSave={sendPlaylistToAccount}
-                saveEvent={savePlaylistName}
                 onRemove={removeTrack}
                 token={token}
               />

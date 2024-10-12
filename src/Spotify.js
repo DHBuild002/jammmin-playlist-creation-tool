@@ -52,63 +52,49 @@ export const createPlaylistInUserAccount = async (
   accessToken,
   trackUris
 ) => {
-  console.log(playlistName);
+  // console.log(playlistName);
   // Check if playlistName is undefined or missing
   if (!playlistName || playlistName.trim() === "") {
     console.error("Playlist name is required.");
 
     return;
   }
-  const url = `https://api.spotify.com/v1/users/${userId.id}/playlists?url=`;
-  const body = {
-    name: playlistName,
-    description: "Created from Jammmin app",
-    public: false,
-  };
-
-  const response = await fetch(`${url}&token=${accessToken}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    // Attempt to parse error details if available
-    const errorMessage = `Failed to create playlist: ${
-      response.statusText || "Unknown error"
-    }`;
-    let errorData;
-    try {
-      errorData = await response.json(); // Check for detailed error response
-      console.error("Detailed error response from Spotify:", errorData);
-      console.log(accessToken);
-      throw new Error(errorData.error?.message || errorMessage);
-    } catch (error) {
-      // Handle case where response is not in JSON format
-      throw new Error(errorMessage);
-    }
+  console.log(trackUris.length);
+  if (trackUris.length === 0) {
+    console.error("No tracks provided");
   }
 
-  const playlistData = await response.json();
+  try {
+    const url = `https://api.spotify.com/v1/users/${userId.id}/playlists?url=`;
+    const body = {
+      name: playlistName,
+      description: "Created from Jammmin app",
+      public: false,
+    };
 
-  // After creating the playlist, call addTracksToPlaylist with the playlistId
-  if (playlistData.id && trackUris && trackUris.length > 0) {
-    await addTracksToPlaylist(playlistData.id, trackUris, accessToken);
+    const response = await fetch(`${url}&token=${accessToken}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+
+    const playlistData = await response.json();
+    const playlistId = playlistData.id;
+    await addTracksToPlaylist(playlistId, trackUris, accessToken);
     console.log(`Tracks added to playlist with ID: ${playlistData.id}`);
+  } catch (error) {
+    console.error("Error: ", error);
   }
-
-  // return playlistData; // Return the created playlist data
-  console.log("Playlist created:", playlistData); // Log the created playlist data
 };
 
 const addTracksToPlaylist = async (playlistId, trackUris, accessToken) => {
   const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
 
   try {
-    await fetch(`${url}`, {
+    await fetch(url, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -119,6 +105,6 @@ const addTracksToPlaylist = async (playlistId, trackUris, accessToken) => {
       }),
     });
   } catch (error) {
-    console.error("Error adding tracks");
+    console.error("Error adding tracks", error);
   }
 };
