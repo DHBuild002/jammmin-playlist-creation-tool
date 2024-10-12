@@ -50,6 +50,7 @@ const Playlist = ({
 
       if (trackUris.length === 0) {
         console.log("No valid URIs in the track list.");
+        return;
       }
       console.log("Track URIs: ", trackUris);
 

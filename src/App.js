@@ -84,6 +84,9 @@ function Callback({ setToken }) {
       localStorage.setItem("spotify_access_token", accessToken);
       setToken(accessToken); // Set the token state
       navigate("/");
+    } else {
+      console.error("Access token not found in URL"); // Add error handling
+      navigate("/login"); // Optionally navigate to a login page if token is not found
     }
   }, [navigate, setToken]);
 
@@ -92,27 +95,46 @@ function Callback({ setToken }) {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      const storedToken = localStorage.getItem("spotify_access_token");
-      if (storedToken) {
-        setToken(storedToken);
-      }
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   // Clear any stored token on initial load
+  //   localStorage.removeItem("spotify_access_token");
+  //   setToken(null); // Ensure the token state is also cleared
 
-  const [token, setToken] = useState(
-    localStorage.getItem("spotify_access_token")
-  );
+  //   // Optionally, you can redirect to the login route here if needed
+  // }, []); // This will only run once on initial load
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("spotify_access_token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
-  // Login State
+  // const handleLoginState = () => {
+  //   const storedToken = localStorage.getItem("spotify_access_token");
+  //   if (storedToken) {
+  //     setToken(storedToken);
+  //     setIsLoggedIn(true); // User is logged in if a valid token is found
+  //   } else {
+  //     setIsLoggedIn(false); // User is logged out
+  //   }
+  // };
+
+  // // Login State
+  // useEffect(() => {
+  //   handleLoginState();
+  // }, []);
+  // useEffect(() => {
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, [token]);
+
+  // // After redirect from Spotify Login
+  // useEffect(() => {
+  //   const urlToken = getTokenFromUrl();
+  //   if (urlToken) {
+  //     localStorage.setItem("spotify_access_token", urlToken);
+  //     setToken(urlToken);
+  //   }
+  // }, []);
 
   // // Set the initial state of tracks
   const [tracks] = useState([]);

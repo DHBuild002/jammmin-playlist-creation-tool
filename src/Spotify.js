@@ -19,6 +19,10 @@ export const getTokenFromUrl = () => {
     .split("&")
     .map((item) => item.split("="))
     .find((parts) => parts[0] === "access_token")[1];
+  // const hash = window.location.hash.substring(1);
+  // const params = new URLSearchParams(hash);
+
+  // params.get("access_token");
 };
 
 export const getUserProfile = async (accessToken) => {
