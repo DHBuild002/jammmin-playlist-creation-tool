@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+import CustomPlaylistName from "./components/CustomPlaylistName.js";
 import Playlist from "./components/Playlist";
+import LogIn from "./components/LogIn.js";
+
 import TrackList from "./components/TrackList";
 import Search from "./components/Search.js";
 
@@ -11,22 +14,17 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import { loginToSpotify, getTokenFromUrl, getUserProfile } from "./Spotify.js";
+import { getTokenFromUrl, getUserProfile } from "./Spotify.js";
 
-function UserAccess({ token, setToken, setIsLoggedIn }) {
+function UserAccess({ token, setToken }) {
   // Profile State management
   const [user, setUser] = useState("");
   const [error, setError] = useState(null);
   const logout = () => {
     localStorage.removeItem("spotify_access_token"); // Clear token from localStorage
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
     setToken(null);
     window.location.href = "/"; // Redirect to UserAccess after logging out
-  };
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    loginToSpotify(); // Trigger the Spotify login process
   };
 
   useEffect(() => {
@@ -62,15 +60,7 @@ function UserAccess({ token, setToken, setIsLoggedIn }) {
       </div>
     </div>
   ) : (
-    <div className="spotify-container">
-      <h2 className="login-txt mt-6">Create a custom playlist</h2>
-      <button
-        className="bg-purple-700 border-white-300 text-white p-3 mt-3 rounded-xl shadow-md hover:bg-purple-600 transition-all duration-300 ease-in-out"
-        onClick={handleLogin}
-      >
-        Login to Spotify
-      </button>
-    </div>
+    <LogIn />
   );
 }
 // Callback component that retrieves the token and stores it in localStorage
@@ -94,8 +84,19 @@ function Callback({ setToken }) {
 }
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
+
+  const saveToken = (token) => {
+    localStorage.setItem("spotify_access_token", token);
+  };
+
+  // On initial app load, retrieve the token from localStorage
+  useEffect(() => {
+    const storedToken = localStorage.getItem("spotify_access_token");
+    if (storedToken) {
+      setToken(storedToken); // Restore the token to state
+    }
+  }, []);
 
   // useEffect(() => {
   //   // Clear any stored token on initial load
@@ -192,7 +193,7 @@ function App() {
   const assignNewPlaylistName = (playlistName) => {
     console.log(playlistName);
     setSavedPlaylistName(playlistName);
-    setIsInitialLoad(false);
+    // setIsInitialLoad(false);
   };
   const removeTrack = (track) => {
     console.log("Removing Track...");
@@ -229,8 +230,8 @@ function App() {
               element={
                 <UserAccess
                   token={token}
-                  setToken={setToken}
-                  setIsLoggedIn={setIsLoggedIn}
+                  setToken={saveToken}
+                  // setIsLoggedIn={setIsLoggedIn}
                 />
               }
             />
@@ -255,10 +256,11 @@ function App() {
               />
             </div>
             <div className="column border2 right-col">
-              <Playlist
-                playlistName={savedPlaylistName}
+              <CustomPlaylistName
                 onNameChange={updatePlaylistName}
                 saveEvent={assignNewPlaylistName}
+              />
+              <Playlist
                 customTrackList={customTrackList}
                 onRemove={removeTrack}
                 token={token}
