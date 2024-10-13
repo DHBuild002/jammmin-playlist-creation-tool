@@ -260,6 +260,7 @@ function App() {
                 onNameChange={updatePlaylistName}
                 saveEvent={assignNewPlaylistName}
               />
+
               <Playlist
                 customTrackList={customTrackList}
                 onRemove={removeTrack}
