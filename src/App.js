@@ -20,11 +20,14 @@ function UserAccess({ token, setToken }) {
   // Profile State management
   const [user, setUser] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Use navigate instead of window.location
+
   const logout = () => {
     localStorage.removeItem("spotify_access_token"); // Clear token from localStorage
-    // setIsLoggedIn(false);
+    console.log(token);
     setToken(null);
-    window.location.href = "/"; // Redirect to UserAccess after logging out
+    console.log("Logout clicked!");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -33,7 +36,6 @@ function UserAccess({ token, setToken }) {
         try {
           const profile = await getUserProfile(token);
           setUser(profile);
-          console.log(profile);
         } catch (error) {
           setError("Failed to load user profile");
         }
@@ -93,8 +95,12 @@ function App() {
   // On initial app load, retrieve the token from localStorage
   useEffect(() => {
     const storedToken = localStorage.getItem("spotify_access_token");
+    console.log("Token in localStorage on app load:", storedToken);
+
     if (storedToken) {
       setToken(storedToken); // Restore the token to state
+    } else {
+      setToken(null);
     }
   }, []);
 
@@ -227,13 +233,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={
-                <UserAccess
-                  token={token}
-                  setToken={saveToken}
-                  // setIsLoggedIn={setIsLoggedIn}
-                />
-              }
+              element={<UserAccess token={token} setToken={saveToken} />}
             />
             <Route
               path="/callback"
@@ -243,7 +243,9 @@ function App() {
           </Routes>
         </Router>
       </div>
-      {token ? (
+
+      {/* Render this part only if the user is authenticated (user state has a value) */}
+      {token && (
         <div className="container playlist-creator-area">
           <div className="row border1">
             <div className="column left-col">
@@ -269,8 +271,6 @@ function App() {
             </div>
           </div>
         </div>
-      ) : (
-        " "
       )}
     </div>
   );

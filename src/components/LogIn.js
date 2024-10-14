@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { loginToSpotify } from "../Spotify";
 
 const LogIn = () => {
-  //   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const handleLogin = () => {
     // setIsLoggedIn(true);
     loginToSpotify(); // Trigger the Spotify login process
