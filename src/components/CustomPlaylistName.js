@@ -28,7 +28,7 @@ const CustomPlaylistName = ({ saveEvent, onNameChange }) => {
     setIsInputVisible(true);
   };
   return (
-    <div className="flex flex-row bg-white h-35 drop-shadow-lg border-gray-400">
+    <div className="flex flex-row rounded-lg bg-white h-25 m-2 drop-shadow-lg border-gray-400">
       <div className="flex-row w-full border-gray-400">
         <div className="flex justify-between items-center text-2xl mt-0 mb-5">
           {/* {/* <h2
@@ -60,7 +60,7 @@ const CustomPlaylistName = ({ saveEvent, onNameChange }) => {
                 onClick={handleEditClick}
               >
                 {playlistName}
-                <hr></hr>
+                <hr className="mt-1 mr-1"></hr>
               </h2>
               <EditIcon
                 className="border-purple-500 ml-0 border-solid border-2 p-x static cursor-pointer text-purple-500 bg-white rounded-lg"

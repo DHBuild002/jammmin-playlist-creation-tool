@@ -47,9 +47,11 @@ function UserAccess({ token, setToken }) {
   // if (error) {
   //   return <div>{error}</div>; // Display error message if fetch fails
   // }
-  // if (!user || !user.username) return <div>Loading...</div>; // Ensure user and username exist
+  // if (!token || !user) return <div>Loading...</div>; // Ensure user and username exist
 
   return token ? (
+    <LogIn />
+  ) : (
     <div className="container">
       <div className="flex justify-end items-center space-x-4 p-4 mx-auto w-2/3">
         <h1 className="">Welcome, {user.username}</h1>
@@ -61,8 +63,6 @@ function UserAccess({ token, setToken }) {
         </button>
       </div>
     </div>
-  ) : (
-    <LogIn />
   );
 }
 // Callback component that retrieves the token and stores it in localStorage
@@ -90,6 +90,7 @@ function App() {
 
   const saveToken = (token) => {
     localStorage.setItem("spotify_access_token", token);
+    setToken(token);
   };
 
   // On initial app load, retrieve the token from localStorage
@@ -147,7 +148,7 @@ function App() {
   const [tracks] = useState([]);
 
   // Search State
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  // const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [searchResults, setSearchResults] = useState([]);
 
   // Custom Playlist State
@@ -245,10 +246,10 @@ function App() {
       </div>
 
       {/* Render this part only if the user is authenticated (user state has a value) */}
-      {token && (
-        <div className="container playlist-creator-area">
-          <div className="row border1">
-            <div className="column left-col">
+      {
+        <div className="w-full mt-6">
+          <div className="flex gap-3 justify-center w-full">
+            <div className="column left-col rounded-lg">
               {/* Search Module - Handle what the user inputs into the searchbox */}
               <Search onSearch={parseQuery} onAdd={addTrack} />
               <TrackList
@@ -257,7 +258,7 @@ function App() {
                 isRemoval={false}
               />
             </div>
-            <div className="column border2 right-col">
+            <div className="column border2 right-col rounded-lg">
               <CustomPlaylistName
                 onNameChange={updatePlaylistName}
                 saveEvent={assignNewPlaylistName}
@@ -271,7 +272,7 @@ function App() {
             </div>
           </div>
         </div>
-      )}
+      }
     </div>
   );
 }
