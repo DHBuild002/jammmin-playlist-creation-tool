@@ -18,8 +18,6 @@ const Search = ({ onAdd }) => {
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query) return;
-    console.log("Access Token:", accessToken);
-    console.log("Search Query: " + query);
 
     try {
       const response = await fetch(
@@ -37,7 +35,6 @@ const Search = ({ onAdd }) => {
         const data = await response.json();
         // Limit results to 3
         const limitedResults = data.tracks.items.slice(0, 3);
-        console.log(limitedResults);
         setResults(limitedResults);
       } else {
         console.error("Error fetching data from Spotify API");

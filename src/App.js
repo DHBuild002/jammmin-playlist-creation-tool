@@ -50,10 +50,8 @@ function UserAccess({ token, setToken }) {
   // if (!token || !user) return <div>Loading...</div>; // Ensure user and username exist
 
   return token ? (
-    <LogIn />
-  ) : (
-    <div className="container">
-      <div className="flex justify-end items-center space-x-4 p-4 mx-auto w-2/3">
+    <div className="flex justify-end">
+      <div className="flex justify-end items-center space-x-3 p-4 mx-auto w-full bg-slate-100">
         <h1 className="">Welcome, {user.username}</h1>
         <button
           className="w-20 bg-white-700 border-purple-700 border text-purple-700 p-1 rounded-xl shadow-sm hover:bg-grey-600 transition-all duration-300 ease-in-out"
@@ -63,6 +61,8 @@ function UserAccess({ token, setToken }) {
         </button>
       </div>
     </div>
+  ) : (
+    <LogIn />
   );
 }
 // Callback component that retrieves the token and stores it in localStorage
@@ -86,7 +86,7 @@ function Callback({ setToken }) {
 }
 
 function App() {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState();
 
   const saveToken = (token) => {
     localStorage.setItem("spotify_access_token", token);
@@ -152,12 +152,11 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   // Custom Playlist State
-  const [savedPlaylistName, setSavedPlaylistName] = useState("");
+  const [savedPlaylistName, setSavedPlaylistName] = useState();
   const [customTrackList, setCustomTrackList] = useState([]);
   // const [savedPlaylist, setSavedPlaylist] = useState([]);
 
   const parseQuery = (query) => {
-    console.log("Track before filtering: ", tracks);
     const lowercaseQuery = query.toLowerCase();
 
     const searchResults = tracks.filter((track) => {
@@ -172,10 +171,8 @@ function App() {
       );
     });
     setSearchResults(searchResults);
-    console.log("Search Results:", searchResults); // Add this to check
   };
   const addTrack = (track) => {
-    console.log("Adding Track: ", track);
     setCustomTrackList((prevTracks) =>
       prevTracks.some((t) => t.id === track.id)
         ? prevTracks
@@ -189,16 +186,13 @@ function App() {
           ]
     );
   };
-  useEffect(() => {
-    console.log(customTrackList);
-  }, [customTrackList]);
+  useEffect(() => {}, [customTrackList]);
 
   const updatePlaylistName = (name) => {
     setSavedPlaylistName(name);
   };
 
   const assignNewPlaylistName = (playlistName) => {
-    console.log(playlistName);
     setSavedPlaylistName(playlistName);
     // setIsInitialLoad(false);
   };
@@ -208,23 +202,6 @@ function App() {
       customTrackList.filter((existingTrack) => existingTrack.id !== track.id)
     );
   };
-
-  // const sendPlaylistToAccount = async () => {
-  //   if (customTrackList === 0) {
-  //     console.log("Playlist is Empty - Please add tracks");
-  //     return;
-  //   }
-  //   // const trackUris = customTrackList.map((track) => track.uri);
-
-  //   // const trackUris = customTrackList
-  //   //   ? customTrackList
-  //   //       .map((track) => track.uri)
-  //   //       .filter((uri) => uri !== undefined)
-  //   //   : [];
-
-  //   setCustomTrackList(trackUris);
-  //   console.log(customTrackList);
-  // };
 
   return (
     <div className="App">
@@ -260,6 +237,7 @@ function App() {
             </div>
             <div className="column border2 right-col rounded-lg">
               <CustomPlaylistName
+                playlistName={savedPlaylistName}
                 onNameChange={updatePlaylistName}
                 saveEvent={assignNewPlaylistName}
               />

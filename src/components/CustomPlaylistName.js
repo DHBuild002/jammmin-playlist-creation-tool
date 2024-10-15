@@ -23,6 +23,7 @@ const CustomPlaylistName = ({ saveEvent, onNameChange }) => {
   const handleNameSave = () => {
     saveEvent(playlistName);
     setIsInputVisible(false);
+    console.log(playlistName);
   };
   const handleEditClick = () => {
     setIsInputVisible(true);
