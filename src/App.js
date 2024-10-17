@@ -43,6 +43,7 @@ function UserAccess({ token, setToken }) {
     }
   }, [token]);
 
+  console.log(error);
   // // Handle loading, error, or rendering the profile
   // if (error) {
   //   return <div>{error}</div>; // Display error message if fetch fails
