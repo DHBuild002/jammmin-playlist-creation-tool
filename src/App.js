@@ -87,6 +87,9 @@ function Callback({ setToken }) {
 
 function App() {
   const [token, setToken] = useState();
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   const saveToken = (token) => {
     localStorage.setItem("spotify_access_token", token);
