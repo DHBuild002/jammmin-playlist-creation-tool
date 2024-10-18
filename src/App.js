@@ -219,7 +219,7 @@ function App() {
             />
             <Route
               path="/callback"
-              element={<Callback setToken={setToken} />}
+              element={<Callback token={token} setToken={setToken} />}
             />
             <Route path="/search" element={<Search />} />
           </Routes>
