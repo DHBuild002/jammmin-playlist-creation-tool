@@ -19,7 +19,6 @@ import { getTokenFromUrl, getUserProfile } from "./Spotify.js";
 function UserAccess({ token, setToken }) {
   // Profile State management
   const [user, setUser] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate(); // Use navigate instead of window.location
 
   const logout = () => {
@@ -37,7 +36,7 @@ function UserAccess({ token, setToken }) {
           const profile = await getUserProfile(token);
           setUser(profile);
         } catch (error) {
-          setError("Failed to load user profile");
+          console.error("Failed to load user profile");
         }
       })();
     } else {
