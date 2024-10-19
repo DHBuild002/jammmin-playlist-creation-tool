@@ -25,7 +25,7 @@ function UserAccess({ token, setToken }) {
   const logout = () => {
     localStorage.removeItem("spotify_access_token"); // Clear token from localStorage
     console.log(token);
-    setToken(null);
+    setToken("");
     console.log("Logout clicked!");
     navigate("/");
   };
@@ -40,10 +40,11 @@ function UserAccess({ token, setToken }) {
           setError("Failed to load user profile");
         }
       })();
+    } else {
+      setUser("");
     }
   }, [token]);
 
-  console.log(error);
   // // Handle loading, error, or rendering the profile
   // if (error) {
   //   return <div>{error}</div>; // Display error message if fetch fails
@@ -87,66 +88,29 @@ function Callback({ setToken }) {
 }
 
 function App() {
-  const [token, setToken] = useState();
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
+  const [token, setToken] = useState("");
 
   const saveToken = (token) => {
+    // localStorage.clear();
     localStorage.setItem("spotify_access_token", token);
     setToken(token);
   };
-
-  // On initial app load, retrieve the token from localStorage
-  useEffect(() => {
-    const storedToken = localStorage.getItem("spotify_access_token");
-    console.log("Token in localStorage on app load:", storedToken);
-
-    if (storedToken) {
-      setToken(storedToken); // Restore the token to state
-    } else {
-      setToken(null);
-    }
-  }, []);
-
   // useEffect(() => {
-  //   // Clear any stored token on initial load
-  //   localStorage.removeItem("spotify_access_token");
-  //   setToken(null); // Ensure the token state is also cleared
-
-  //   // Optionally, you can redirect to the login route here if needed
-  // }, []); // This will only run once on initial load
-
-  // const handleLoginState = () => {
-  //   const storedToken = localStorage.getItem("spotify_access_token");
-  //   if (storedToken) {
-  //     setToken(storedToken);
-  //     setIsLoggedIn(true); // User is logged in if a valid token is found
-  //   } else {
-  //     setIsLoggedIn(false); // User is logged out
-  //   }
-  // };
-
-  // // Login State
-  // useEffect(() => {
-  //   handleLoginState();
-  // }, []);
-  // useEffect(() => {
-  //   if (token) {
-  //     setIsLoggedIn(true);
-  //   } else {
-  //     setIsLoggedIn(false);
+  //   if (!token) {
+  //     localStorage.clear(); // Clear localStorage if no token is set
   //   }
   // }, [token]);
 
-  // // After redirect from Spotify Login
-  // useEffect(() => {
-  //   const urlToken = getTokenFromUrl();
-  //   if (urlToken) {
-  //     localStorage.setItem("spotify_access_token", urlToken);
-  //     setToken(urlToken);
-  //   }
-  // }, []);
+  // // On initial app load, retrieve the token from localStorage
+  useEffect(() => {
+    const storedToken = localStorage.getItem("spotify_access_token");
+    console.log("Token in localStorage on app load:", storedToken);
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      console.log("No token found. Potential Initial load or server error...");
+    }
+  }, [token]);
 
   // // Set the initial state of tracks
   const [tracks] = useState([]);
@@ -219,7 +183,7 @@ function App() {
             />
             <Route
               path="/callback"
-              element={<Callback token={token} setToken={setToken} />}
+              element={<Callback token={token} setToken={saveToken} />}
             />
             <Route path="/search" element={<Search />} />
           </Routes>
