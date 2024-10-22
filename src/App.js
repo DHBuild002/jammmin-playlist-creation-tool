@@ -16,7 +16,18 @@ import {
 } from "react-router-dom";
 import { getTokenFromUrl, getUserProfile } from "./Spotify.js";
 
-function UserAccess({ token, setToken }) {
+function UserAccess({
+  token,
+  setToken,
+  parseQuery,
+  searchResults,
+  addTrack,
+  customTrackList,
+  removeTrack,
+  updatePlaylistName,
+  savedPlaylistName,
+  assignNewPlaylistName,
+}) {
   // Profile State management
   const [user, setUser] = useState("");
   const navigate = useNavigate(); // Use navigate instead of window.location
@@ -51,17 +62,30 @@ function UserAccess({ token, setToken }) {
   // if (!token || !user) return <div>Loading...</div>; // Ensure user and username exist
 
   return token ? (
-    <div className="flex justify-end">
-      <div className="flex justify-end items-center space-x-3 p-4 mx-auto w-full bg-slate-100">
-        <h1 className="">Welcome, {user.username}</h1>
-        <button
-          className="w-20 bg-white-700 border-purple-700 border text-purple-700 p-1 rounded-xl shadow-sm hover:bg-grey-600 transition-all duration-300 ease-in-out"
-          onClick={logout}
-        >
-          Log Out
-        </button>
+    <>
+      <div className="flex justify-end">
+        <div className="flex justify-end items-center space-x-3 p-4 mx-auto w-full bg-slate-100">
+          <h1 className="">Welcome, {user.username}</h1>
+          <button
+            className="w-20 bg-white-700 border-purple-700 border text-purple-700 p-1 rounded-xl shadow-sm hover:bg-grey-600 transition-all duration-300 ease-in-out"
+            onClick={logout}
+          >
+            Log Out
+          </button>
+        </div>
       </div>
-    </div>
+      <AppControls
+        token={token}
+        parseQuery={parseQuery}
+        searchResults={searchResults}
+        addTrack={addTrack}
+        customTrackList={customTrackList}
+        removeTrack={removeTrack}
+        updatePlaylistName={updatePlaylistName}
+        savedPlaylistName={savedPlaylistName}
+        assignNewPlaylistName={assignNewPlaylistName}
+      />
+    </>
   ) : (
     <LogIn />
   );
@@ -82,8 +106,49 @@ function Callback({ setToken }) {
       navigate("/login"); // Optionally navigate to a login page if token is not found
     }
   }, [navigate, setToken]);
+}
+function AppControls({
+  token,
+  setToken,
+  parseQuery,
+  searchResults,
+  addTrack,
+  customTrackList,
+  removeTrack,
+  updatePlaylistName,
+  savedPlaylistName,
+  assignNewPlaylistName,
+}) {
+  return (
+    <div className="w-full mt-6">
+      <div className="flex gap-3 justify-center w-full">
+        <div className="column left-col rounded-lg">
+          {/* COLUMN 1 */}
+          <Search onSearch={parseQuery} onAdd={addTrack} />
+          <TrackList
+            tracks={searchResults}
+            onAdd={addTrack}
+            isRemoval={false}
+          />
+        </div>
 
-  return null; // You can return a loading spinner here if desired
+        {/* COLUMN 2 */}
+        <div className="column border2 right-col rounded-lg">
+          <CustomPlaylistName
+            playlistName={savedPlaylistName}
+            onNameChange={updatePlaylistName}
+            saveEvent={assignNewPlaylistName}
+          />
+
+          <Playlist
+            customTrackList={customTrackList}
+            onRemove={removeTrack}
+            token={token}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function App() {
@@ -169,7 +234,6 @@ function App() {
       customTrackList.filter((existingTrack) => existingTrack.id !== track.id)
     );
   };
-
   return (
     <div className="App">
       <header className="purple-strip"></header>
@@ -184,40 +248,16 @@ function App() {
               path="/callback"
               element={<Callback token={token} setToken={saveToken} />}
             />
-            <Route path="/search" element={<Search />} />
+            {/* <Route
+              path="/"
+              element={
+                <AppControls/>
+              }
+            /> */}
+            {/* <Route path="/search" element={<Search />} /> */}
           </Routes>
         </Router>
       </div>
-
-      {/* Render this part only if the user is authenticated (user state has a value) */}
-      {
-        <div className="w-full mt-6">
-          <div className="flex gap-3 justify-center w-full">
-            <div className="column left-col rounded-lg">
-              {/* Search Module - Handle what the user inputs into the searchbox */}
-              <Search onSearch={parseQuery} onAdd={addTrack} />
-              <TrackList
-                tracks={searchResults}
-                onAdd={addTrack}
-                isRemoval={false}
-              />
-            </div>
-            <div className="column border2 right-col rounded-lg">
-              <CustomPlaylistName
-                playlistName={savedPlaylistName}
-                onNameChange={updatePlaylistName}
-                saveEvent={assignNewPlaylistName}
-              />
-
-              <Playlist
-                customTrackList={customTrackList}
-                onRemove={removeTrack}
-                token={token}
-              />
-            </div>
-          </div>
-        </div>
-      }
     </div>
   );
 }

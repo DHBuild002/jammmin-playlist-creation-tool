@@ -44,10 +44,6 @@ const Search = ({ onAdd }) => {
       console.error(error);
     }
   };
-  // const handleAdd = (track) => {
-  //   console.log("Track added:", track);
-  //   onAdd(track);
-  // };
 
   return (
     <div className="w-full p-6 flex flex-col flow-start">
@@ -67,25 +63,6 @@ const Search = ({ onAdd }) => {
           Search
         </button>
       </div>
-
-      {/* <div className="track-list-container">
-        {results.length > 0 && (
-          <ul className="track-list">
-            {results.map((track) => (
-              <Track
-                track={{
-                  id: track.id,
-                  name: track.name,
-                  artist: track.artists.map((artist) => artist.name).join(", "),
-                  album: track.album.name,
-                }}
-                onAdd={onAdd}
-                isRemoval={false} // Pass isRemoval prop if needed
-              />
-            ))}
-          </ul>
-        )}
-      </div> */}
       <div className="track-list-container">
         {results.length > 0 && (
           <TrackList
