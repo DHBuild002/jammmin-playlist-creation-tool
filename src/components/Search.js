@@ -50,7 +50,7 @@ const Search = ({ onAdd }) => {
       <div className="mb-5">
         <input
           type="text"
-          className="w-full p-2 border rounded shadow-md"
+          className="w-full p-3 text-xs placeholder-size-sm border border-purple-400 rounded-full shadow-sm focus:border-purple-700 focus:border-2 focus:outline-none cursor-pointer"
           placeholder="Search..."
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -58,7 +58,7 @@ const Search = ({ onAdd }) => {
       <div className="w-full mb-5">
         <button
           onClick={handleSearch}
-          className="w-full bg-purple-700 border-green-500 text-white p-3 rounded-xl shadow-2xl hover:bg-purple-600 transition-all duration-300 ease-in-out"
+          className="w-full uppercase bg-purple-700 border border-white text-white p-2 rounded-lg hover:bg-purple-600 focus:outline-none"
         >
           Search
         </button>
