@@ -107,75 +107,7 @@ function Callback({ setToken }) {
     }
   }, [navigate, setToken]);
 }
-function AppControls({
-  token,
-  setToken,
-  parseQuery,
-  searchResults,
-  addTrack,
-  customTrackList,
-  removeTrack,
-  updatePlaylistName,
-  savedPlaylistName,
-  assignNewPlaylistName,
-}) {
-  return (
-    <div className="w-full mt-6">
-      <div className="flex gap-3 justify-center w-full">
-        <div className="column left-col rounded-lg">
-          {/* COLUMN 1 */}
-          <Search onSearch={parseQuery} onAdd={addTrack} />
-          <TrackList
-            tracks={searchResults}
-            onAdd={addTrack}
-            isRemoval={false}
-          />
-        </div>
-
-        {/* COLUMN 2 */}
-        <div className="column border2 right-col rounded-lg">
-          <CustomPlaylistName
-            playlistName={savedPlaylistName}
-            onNameChange={updatePlaylistName}
-            saveEvent={assignNewPlaylistName}
-          />
-
-          <Playlist
-            customTrackList={customTrackList}
-            onRemove={removeTrack}
-            token={token}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function App() {
-  const [token, setToken] = useState("");
-
-  const saveToken = (token) => {
-    // localStorage.clear();
-    localStorage.setItem("spotify_access_token", token);
-    setToken(token);
-  };
-  // useEffect(() => {
-  //   if (!token) {
-  //     localStorage.clear(); // Clear localStorage if no token is set
-  //   }
-  // }, [token]);
-
-  // // On initial app load, retrieve the token from localStorage
-  useEffect(() => {
-    const storedToken = localStorage.getItem("spotify_access_token");
-    console.log("Token in localStorage on app load:", storedToken);
-    if (storedToken) {
-      setToken(storedToken);
-    } else {
-      console.log("No token found. Potential Initial load or server error...");
-    }
-  }, [token]);
-
+function AppControls({ token }) {
   // // Set the initial state of tracks
   const [tracks] = useState([]);
 
@@ -218,8 +150,6 @@ function App() {
           ]
     );
   };
-  useEffect(() => {}, [customTrackList]);
-
   const updatePlaylistName = (name) => {
     setSavedPlaylistName(name);
   };
@@ -234,6 +164,124 @@ function App() {
       customTrackList.filter((existingTrack) => existingTrack.id !== track.id)
     );
   };
+  useEffect(() => {}, [customTrackList]);
+  return (
+    <div className="w-full mt-6">
+      <div className="flex gap-3 justify-center w-full">
+        <div className="column left-col rounded-lg">
+          {/* COLUMN 1 */}
+          <Search onSearch={parseQuery} onAdd={addTrack} />
+          <TrackList
+            tracks={searchResults}
+            onAdd={addTrack}
+            isRemoval={false}
+          />
+        </div>
+
+        {/* COLUMN 2 */}
+        <div className="column border2 right-col rounded-lg">
+          <CustomPlaylistName
+            playlistName={savedPlaylistName}
+            onNameChange={updatePlaylistName}
+            saveEvent={assignNewPlaylistName}
+          />
+
+          <Playlist
+            customTrackList={customTrackList}
+            onRemove={removeTrack}
+            token={token}
+            playlistName={savedPlaylistName}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [token, setToken] = useState("");
+
+  const saveToken = (token) => {
+    // localStorage.clear();
+    localStorage.setItem("spotify_access_token", token);
+    setToken(token);
+  };
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     localStorage.clear(); // Clear localStorage if no token is set
+  //   }
+  // }, [token]);
+
+  // // On initial app load, retrieve the token from localStorage
+  useEffect(() => {
+    const storedToken = localStorage.getItem("spotify_access_token");
+    console.log("Token in localStorage on app load:", storedToken);
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      console.log("No token found. Potential Initial load or server error...");
+    }
+  }, [token]);
+
+  // // // Set the initial state of tracks
+  // const [tracks] = useState([]);
+
+  // // Search State
+  // // const [isInitialLoad, setIsInitialLoad] = useState(true);
+  // const [searchResults, setSearchResults] = useState([]);
+
+  // // Custom Playlist State
+  // const [savedPlaylistName, setSavedPlaylistName] = useState();
+  // const [customTrackList, setCustomTrackList] = useState([]);
+  // // const [savedPlaylist, setSavedPlaylist] = useState([]);
+
+  // const parseQuery = (query) => {
+  //   const lowercaseQuery = query.toLowerCase();
+
+  //   const searchResults = tracks.filter((track) => {
+  //     const lowercaseName = track.name.toLowerCase();
+  //     const lowercaseArtist = track.artist.toLowerCase();
+  //     const lowercaseAlbum = track.album.toLowerCase();
+
+  //     return (
+  //       lowercaseName.includes(lowercaseQuery) ||
+  //       lowercaseArtist.includes(lowercaseQuery) ||
+  //       lowercaseAlbum.includes(lowercaseQuery)
+  //     );
+  //   });
+  //   setSearchResults(searchResults);
+  // };
+  // const addTrack = (track) => {
+  //   setCustomTrackList((prevTracks) =>
+  //     prevTracks.some((t) => t.id === track.id)
+  //       ? prevTracks
+  //       : [
+  //           ...prevTracks,
+  //           {
+  //             ...track,
+  //             uri: `spotify:track:${track.id}`,
+  //             localId: `${track.id}-${Date.now()}`,
+  //           },
+  //         ]
+  //   );
+  // };
+  // useEffect(() => {}, [customTrackList]);
+
+  // const updatePlaylistName = (name) => {
+  //   setSavedPlaylistName(name);
+  // };
+
+  // const assignNewPlaylistName = (playlistName) => {
+  //   setSavedPlaylistName(playlistName);
+  //   // setIsInitialLoad(false);
+  // };
+  // const removeTrack = (track) => {
+  //   console.log("Removing Track...");
+  //   setCustomTrackList(
+  //     customTrackList.filter((existingTrack) => existingTrack.id !== track.id)
+  //   );
+  // };
   return (
     <div className="App">
       <header className="purple-strip"></header>
@@ -243,18 +291,14 @@ function App() {
             <Route
               path="/"
               element={<UserAccess token={token} setToken={saveToken} />}
-            />
+            >
+              <Route index element={<AppControls />}></Route>
+            </Route>
+
             <Route
               path="/callback"
               element={<Callback token={token} setToken={saveToken} />}
             />
-            {/* <Route
-              path="/"
-              element={
-                <AppControls/>
-              }
-            /> */}
-            {/* <Route path="/search" element={<Search />} /> */}
           </Routes>
         </Router>
       </div>
