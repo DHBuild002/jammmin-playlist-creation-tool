@@ -29,7 +29,7 @@ const CustomPlaylistName = ({ saveEvent, onNameChange }) => {
     setIsInputVisible(true);
   };
   return (
-    <div className="flex flex-row rounded-lg bg-white h-25 m-2 drop-shadow-lg border-gray-400">
+    <div className="flex flex-row rounded-lg bg-white h-25 m-2 drop-shadow-sm border-gray-400">
       <div className="flex-row w-full border-gray-400">
         <div className="flex justify-between items-center text-2xl mt-0 mb-5">
           {/* {/* <h2
@@ -55,16 +55,16 @@ const CustomPlaylistName = ({ saveEvent, onNameChange }) => {
               </button>
             </div>
           ) : (
-            <div className="flex flex-row w-full justify-center items-center">
+            <div className="flex flex-row w-full h-5 justify-center items-center p-5 mt-4 bg-white">
               <h2
-                className="cursor-pointer text-purple-950 border-b pb-7 mt-7 border-b-white w-3/6 mr-0"
+                className="bg-purple-350 p-5 h-fit items-center rounded-lg mr-2 cursor-pointer text-purple-950 bg-violet-100 border-b-white w-2/4"
                 onClick={handleEditClick}
               >
                 {playlistName}
-                <hr className="mt-1 mr-1"></hr>
               </h2>
               <EditIcon
-                className="border-purple-500 ml-0 border-solid border-2 p-x static cursor-pointer text-purple-500 bg-white rounded-lg"
+                style={{ fontSize: "2rem" }}
+                className="border-purple-500 border-solid border-2 p-x static cursor-pointer text-purple-500 bg-white rounded-md"
                 onClick={handleEditClick}
               />
             </div>
