@@ -64,8 +64,11 @@ function UserAccess({
   return token ? (
     <>
       <div className="flex justify-end">
-        <div className="flex justify-end items-center space-x-3 p-4 mx-auto w-full bg-slate-100">
-          <h1 className="">Welcome, {user.username} (Developer Mode - Please request to be added to our approved users list before using this app)</h1>
+        <div className="flex justify-end items-center space-x-3 p-4 mx-auto w-full bg-violet-400">
+          <h1 className="">
+            Welcome, {user.username} (Developer Mode - Please request to be
+            added to our approved users list before using this app)
+          </h1>
           <button
             className="w-20 bg-white-700 border-purple-700 border text-purple-700 p-1 rounded-xl shadow-sm hover:bg-grey-600 transition-all duration-300 ease-in-out"
             onClick={logout}
