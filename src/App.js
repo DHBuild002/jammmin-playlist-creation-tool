@@ -65,7 +65,7 @@ function UserAccess({
     <>
       <div className="flex justify-end">
         <div className="flex justify-end items-center space-x-3 p-4 mx-auto w-full bg-violet-400">
-          <h1 className="">
+          <h1 className="font-bold">
             Welcome, {user.username} (Developer Mode - Please request to be
             added to our approved users list before using this app)
           </h1>
